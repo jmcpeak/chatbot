@@ -13,8 +13,15 @@ const theme = createTheme({
 		MuiDialog: {
 			styleOverrides: {
 				paper: {
-					borderRadius: 16,
+					borderRadius: 24,
 					backgroundColor: "rgb(27, 27, 27)",
+				},
+			},
+		},
+		MuiCard: {
+			styleOverrides: {
+				root: {
+					borderRadius: 24,
 				},
 			},
 		},

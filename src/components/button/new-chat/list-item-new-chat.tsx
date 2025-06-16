@@ -5,7 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 
 export default function ListItemNewChat() {
 	return (
-		<ListItemButton sx={{ pb: 0, pt: 0 }} component="a" href="/search">
+		<ListItemButton sx={{ pb: 0, pt: 0 }} component="a" href="/">
 			<ListItemIcon sx={{ minWidth: 32 }}>
 				<QuestionAnswerOutlined fontSize="small" />
 			</ListItemIcon>

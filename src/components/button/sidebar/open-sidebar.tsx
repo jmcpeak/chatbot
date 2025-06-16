@@ -1,4 +1,5 @@
-import SidebarButton, { OPEN } from "@/components/button/sidebar/sidebar";
+import { OPEN } from "@/components/button/sidebar/consts";
+import SidebarButton from "@/components/button/sidebar/sidebar";
 
 const sx = { cursor: "e-resize" };
 

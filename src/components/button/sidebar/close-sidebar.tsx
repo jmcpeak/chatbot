@@ -1,4 +1,5 @@
-import SidebarButton, { CLOSE } from "@/components/button/sidebar/sidebar";
+import { CLOSE } from "@/components/button/sidebar/consts";
+import SidebarButton from "@/components/button/sidebar/sidebar";
 
 const sx = { cursor: "w-resize" };
 
