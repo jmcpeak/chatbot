@@ -3,6 +3,7 @@
 		"jest.config.js",
 		"jest.setup.js",
 		"**/*.test.tsx",
-		"tests-examples/**"
+		"tests-examples/**",
+		"src/hooks/use-drawer-effect.ts"
 	]
 }
