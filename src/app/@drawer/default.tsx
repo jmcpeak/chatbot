@@ -29,7 +29,7 @@ const items = [
 	{ key: 3, label: "The Great Depression" },
 ];
 
-export default function Page() {
+export default function Default() {
 	const open = useStore((state) => state.drawerOpen);
 
 	return (
@@ -37,7 +37,7 @@ export default function Page() {
 			<Toolbar sx={{ "&.MuiToolbar-root": { pl: 2, pr: 2 } }}>
 				<Grid container alignItems="center" sx={{ width: "100%" }}>
 					<Grid size="grow">
-						<IconButton component="a" href="/">
+						<IconButton component="a" href="/example">
 							<Avatar
 								src="/cfa-bw-crop.png"
 								alt="CFA Institute"

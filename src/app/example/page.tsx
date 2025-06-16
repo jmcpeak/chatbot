@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { type ChangeEvent, useState } from "react";
 
-const StreamedAnswer = () => {
+export default function Page() {
 	const [input, setInput] = useState("");
 	const [response, setResponse] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -100,6 +100,4 @@ const StreamedAnswer = () => {
 			</CardActions>
 		</Card>
 	);
-};
-
-export default StreamedAnswer;
+}
