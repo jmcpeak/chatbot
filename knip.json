@@ -1,0 +1,8 @@
+{
+	"ignore": [
+		"jest.config.js",
+		"jest.setup.js",
+		"**/*.test.tsx",
+		"tests-examples/**"
+	]
+}
