@@ -1,13 +1,25 @@
+import type { Profile } from "@/app/api/profile/route";
 import Traits from "@/components/dialog/personalize/dialog-content/traits/traits";
 import HelpOutlineOutlined from "@mui/icons-material/HelpOutlineOutlined";
 import DialogContentMui from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
+import { useQuery } from "@tanstack/react-query";
 
 const sx = { minWidth: 600, mt: 2 };
 
 export default function DialogContent() {
+	const { data } = useQuery({
+		queryKey: ["profile"],
+		queryFn: async (): Promise<Profile> => {
+			const res = await fetch("/api/profile");
+
+			return res.json();
+		},
+		staleTime: 10000, // 10 seconds
+	});
+
 	return (
 		<DialogContentMui sx={sx}>
 			<Grid container direction="column" spacing={4}>
@@ -20,7 +32,7 @@ export default function DialogContent() {
 						label="What should ChatGPT call you?"
 						type="text"
 						variant="outlined"
-						value="Jason"
+						value={data?.preferredName ?? ""}
 					/>
 				</Grid>
 				<Grid>
@@ -31,7 +43,7 @@ export default function DialogContent() {
 						label="What do you do?"
 						type="text"
 						variant="outlined"
-						value="Senior Lead Front End Developer"
+						value={data?.responsibilities ?? ""}
 					/>
 				</Grid>
 				<Grid>
@@ -68,7 +80,7 @@ export default function DialogContent() {
 						}
 						type="text"
 						variant="outlined"
-						value="Be knowledgable"
+						value={data?.other ?? ""}
 					/>
 				</Grid>
 			</Grid>

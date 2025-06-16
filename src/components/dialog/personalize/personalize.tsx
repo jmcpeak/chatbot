@@ -2,8 +2,8 @@ import DialogActions from "@/components/dialog/personalize/dialog-actions";
 import DialogContent from "@/components/dialog/personalize/dialog-content/dialog-content";
 import DialogTitle from "@/components/dialog/personalize/dialog-title";
 import useStore from "@/hooks/use-store";
-import { Divider } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
+import Divider from "@mui/material/Divider";
 
 export default function Personalize() {
 	const open = useStore((state) => state.personalizeDialogOpen);

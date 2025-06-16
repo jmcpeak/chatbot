@@ -14,7 +14,7 @@ export default function AppBar() {
 	const open = useStore((state) => state.drawerOpen);
 
 	return (
-		<MuiAppBar>
+		<MuiAppBar elevation={0}>
 			<Toolbar>
 				<Grid
 					alignItems="center"

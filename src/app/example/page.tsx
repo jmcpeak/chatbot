@@ -1,5 +1,6 @@
 "use client";
 
+import useInput from "@/app/example/use-input";
 import useStore from "@/hooks/use-store";
 import Add from "@mui/icons-material/Add";
 import Pageview from "@mui/icons-material/Pageview";
@@ -16,12 +17,10 @@ import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useMutation } from "@tanstack/react-query";
-import { type ChangeEvent, useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export default function Page() {
-	const [input, setInput] = useState("");
-	const [response, setResponse] = useState("");
+	const [isPending, input, response, handleChange, handleStream] = useInput();
 	const open = useStore((state) => state.drawerOpen);
 	const sx = useMemo(
 		() => ({
@@ -30,37 +29,6 @@ export default function Page() {
 		}),
 		[open],
 	);
-
-	const { mutate, isPending } = useMutation({
-		mutationFn: async (prompt: string) => {
-			const res = await fetch("/api/stream", {
-				method: "POST",
-				body: JSON.stringify({ prompt }),
-			});
-			if (!res.body) return "No response body received.";
-			const reader = res.body.getReader();
-			const decoder = new TextDecoder("utf-8");
-			let result = "";
-			while (true) {
-				const { value, done } = await reader.read();
-				if (done) break;
-				const chunk = decoder.decode(value);
-				result += chunk;
-				setResponse((prev) => prev + chunk);
-			}
-			return result;
-		},
-	});
-
-	const handleChange = useCallback(
-		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-			setInput(e.target.value);
-		},
-		[],
-	);
-	const handleStream = useCallback(() => {
-		mutate(input);
-	}, [input, mutate]);
 
 	return (
 		<Box sx={sx}>

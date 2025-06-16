@@ -5,11 +5,29 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
 	palette: {
 		mode: "dark",
+		background: {
+			default: "rgb(33, 33, 33)", // Your desired background color
+		},
 	},
 	typography: {
 		fontFamily: "var(--font-geist-sans)",
 	},
 	components: {
+		MuiAppBar: {
+			styleOverrides: {
+				root: {
+					backgroundColor: "rgb(33, 33, 33)", // Match the palette or override it
+				},
+			},
+		},
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					borderRadius: 24,
+					lineHeight: 2,
+				},
+			},
+		},
 		MuiDialog: {
 			styleOverrides: {
 				paper: {

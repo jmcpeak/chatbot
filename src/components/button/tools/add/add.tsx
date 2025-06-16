@@ -8,21 +8,24 @@ import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
 
-export default function Add() {
+export default function PromptTools() {
 	const [anchorEl, handleClick, handleClose] = useMenu();
 
 	return (
 		<>
-			<IconButton
-				aria-controls="more-menu-appbar"
-				aria-haspopup="true"
-				aria-label="menu"
-				edge="start"
-				onClick={handleClick}
-			>
-				<AddIcon fontSize="small" />
-			</IconButton>
+			<Tooltip title="PromptTools photos and files">
+				<IconButton
+					aria-controls="more-menu-appbar"
+					aria-haspopup="true"
+					aria-label="menu"
+					edge="start"
+					onClick={handleClick}
+				>
+					<AddIcon fontSize="small" />
+				</IconButton>
+			</Tooltip>
 			<Menu
 				anchorEl={anchorEl}
 				id="more-menu-appbar"
@@ -34,13 +37,13 @@ export default function Add() {
 					<ListItemIcon>
 						<PhotoLibraryOutlined fontSize="small" />
 					</ListItemIcon>
-					Add photos and files
+					PromptTools photos and files
 				</MenuItem>
 				<MenuItem onClick={handleClose}>
 					<ListItemIcon>
 						<CloudSyncOutlined />
 					</ListItemIcon>
-					Add from apps
+					PromptTools from apps
 				</MenuItem>
 			</Menu>
 		</>

@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+export type HeaderMessages = {
+	message: string[];
+};
+
 const messages = [
 	"What's on the agenda today?",
 	"How can I help you today?",

@@ -20,9 +20,19 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-			"nursery":  {
+			"nursery": {
 				"all": true,
-				"useExplicitType": "off"
+				"useExplicitType": "off",
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"paths": {
+							"@mui/material": "Import a sub-path instead, e.g. @mui/material/Button",
+							"@mui/icons-material": "Import a specific icon sub-path, e.g. @mui/icons-material/Add",
+							"@mui/lab": "Import from @mui/lab/<component> to avoid tree-shaking issues"
+						}
+					}
+				}
 			}
 		}
 	},
