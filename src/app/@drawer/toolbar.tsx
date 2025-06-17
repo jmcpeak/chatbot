@@ -3,6 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import ToolbarMui from "@mui/material/Toolbar";
+import Link from "next/link";
 
 const sxAvatar = { width: 20, height: 20 };
 const sxGrid = { width: "100%" };
@@ -13,7 +14,7 @@ export default function Toolbar() {
 		<ToolbarMui sx={sxToolbar}>
 			<Grid container alignItems="center" sx={sxGrid}>
 				<Grid size="grow">
-					<IconButton component="a" href="/example">
+					<IconButton component={Link} href="/example">
 						<Avatar src="/cfa-bw-crop.png" alt="CFA Institute" sx={sxAvatar} />
 					</IconButton>
 				</Grid>
