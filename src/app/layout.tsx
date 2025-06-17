@@ -32,7 +32,7 @@ type Props = Readonly<{
 
 export default function Layout({ appbar, children, dialog, drawer }: Props) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en">
 			<body className={`${geistSans.variable} ${geistMono.variable}`}>
 				<AppRouterCacheProvider>
 					<ThemeRegistry>
