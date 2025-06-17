@@ -10,7 +10,8 @@
 		"test": "jest",
 		"check": "biome check ./src --write",
 		"knip": "knip",
-		"playwright": "npx playwright test"
+		"playwright": "npx playwright test",
+		"tsc": "tsc"
 	},
 	"dependencies": {
 		"@emotion/cache": "11.14.0",

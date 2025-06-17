@@ -20,7 +20,7 @@ import Typography from "@mui/material/Typography";
 import { useMemo } from "react";
 
 export default function Page() {
-	const [isPending, input, response, handleChange, handleStream] = useInput();
+	const [isPending, input, response, handleChange] = useInput();
 	const open = useStore((state) => state.drawerOpen);
 	const sx = useMemo(
 		() => ({
@@ -55,11 +55,7 @@ export default function Page() {
 					/>
 				</CardActionArea>
 				<CardContent sx={{ minWidth: 600 }}>
-					<Button
-						variant="contained"
-						onClick={handleStream}
-						disabled={isPending}
-					>
+					<Button variant="contained" disabled={isPending}>
 						{isPending ? "Loading..." : "Submit"}
 					</Button>
 					<Paper elevation={3} sx={{ mt: 3, p: 2, minHeight: 100 }}>
