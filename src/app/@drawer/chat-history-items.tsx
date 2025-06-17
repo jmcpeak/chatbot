@@ -7,6 +7,7 @@ import useIdFromPathname from "@/hooks/use-id-from-pathname";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 const sxListItemText = { pl: 2 };
 
@@ -30,7 +31,7 @@ export default function ChatHistoryItems({ secondaryActionDisabled = false }) {
 			sx={sxListItem}
 		>
 			<ListItemButton
-				component="a"
+				component={Link}
 				dense
 				disableGutters
 				href={`/c/${id}`}
