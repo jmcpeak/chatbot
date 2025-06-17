@@ -1,14 +1,19 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { type ChangeEvent, useCallback, useState } from "react";
+import {
+	type ChangeEvent,
+	type KeyboardEvent,
+	useCallback,
+	useState,
+} from "react";
 
 type Tuple = [
 	boolean,
 	string,
 	string,
 	(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
-	() => void,
+	(e: KeyboardEvent<HTMLInputElement>) => void,
 ];
 
 export default function useInput(): Tuple {
@@ -20,10 +25,13 @@ export default function useInput(): Tuple {
 				method: "POST",
 				body: JSON.stringify({ prompt }),
 			});
+
 			if (!res.body) return "No response body received.";
+
 			const reader = res.body.getReader();
 			const decoder = new TextDecoder("utf-8");
 			let result = "";
+
 			while (true) {
 				const { value, done } = await reader.read();
 				if (done) break;
@@ -31,6 +39,7 @@ export default function useInput(): Tuple {
 				result += chunk;
 				setResponse((prev) => prev + chunk);
 			}
+
 			return result;
 		},
 	});
@@ -41,9 +50,15 @@ export default function useInput(): Tuple {
 		},
 		[],
 	);
-	const handleStream = useCallback(() => {
-		mutate(input);
-	}, [input, mutate]);
+	const handleKeyDown = useCallback(
+		(e: KeyboardEvent<HTMLInputElement>) => {
+			if (e.key === "Enter") {
+				mutate(input);
+				setInput("");
+			}
+		},
+		[input, mutate],
+	);
 
-	return [isPending, input, response, handleChange, handleStream];
+	return [isPending, input, response, handleChange, handleKeyDown];
 }
