@@ -1,10 +1,8 @@
 import QueryProvider from "@/app/query-provider";
 import SuccessSnackbar from "@/components/snackbar/success/snackbar";
-import theme from "@/theme";
+import ThemeRegistry from "@/theme-registry";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider } from "@mui/material/styles";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
@@ -38,9 +36,8 @@ export default function Layout({ appbar, children, drawer }: Props) {
 		<html lang="en">
 			<body className={`${geistSans.variable} ${geistMono.variable}`}>
 				<AppRouterCacheProvider>
-					<ThemeProvider theme={theme}>
+					<ThemeRegistry>
 						<QueryProvider>
-							<CssBaseline enableColorScheme />
 							<SuccessSnackbar />
 							{appbar}
 							{drawer}
@@ -48,7 +45,7 @@ export default function Layout({ appbar, children, drawer }: Props) {
 								{children}
 							</Box>
 						</QueryProvider>
-					</ThemeProvider>
+					</ThemeRegistry>
 				</AppRouterCacheProvider>
 			</body>
 		</html>
