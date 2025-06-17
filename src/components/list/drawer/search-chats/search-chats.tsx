@@ -9,14 +9,14 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 export default function SearchChats() {
-	const { visible, ...props } = useIsHovered();
+	const { visible, ref, ...props } = useIsHovered();
 
 	return (
 		<ListItemButton
+			{...props}
 			component="a"
 			href="/search"
 			sx={sxListItemButton}
-			{...props}
 		>
 			<ListItemIcon sx={sxListItemIcon}>
 				<SearchOutlined fontSize="small" />

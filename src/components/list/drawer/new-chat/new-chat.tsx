@@ -9,10 +9,10 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 export default function NewChat() {
-	const { visible, ...props } = useIsHovered();
+	const { visible, ref, ...props } = useIsHovered();
 
 	return (
-		<ListItemButton {...props} sx={sxListItemButton} component="a" href="/">
+		<ListItemButton {...props} component="a" href="/" sx={sxListItemButton}>
 			<ListItemIcon sx={sxListItemIcon}>
 				<MapsUgcOutlined fontSize="small" />
 			</ListItemIcon>
