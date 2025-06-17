@@ -14,7 +14,7 @@ export default function Toolbar() {
 		<ToolbarMui sx={sxToolbar}>
 			<Grid container alignItems="center" sx={sxGrid}>
 				<Grid size="grow">
-					<IconButton component={Link} href="/example">
+					<IconButton component={Link} href="/">
 						<Avatar src="/cfa-bw-crop.png" alt="CFA Institute" sx={sxAvatar} />
 					</IconButton>
 				</Grid>
