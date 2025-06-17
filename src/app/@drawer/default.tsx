@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChatHistory } from "@/app/api/chat/history/route";
+import ChatHistoryItems from "@/app/@drawer/chat-history-items";
 import CloseSidebarButton from "@/components/button/sidebar/close-sidebar";
 import ListItemLibrary from "@/components/list/drawer/library/library";
 import ListItemNewChat from "@/components/list/drawer/new-chat/new-chat";
@@ -12,10 +12,8 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import Toolbar from "@mui/material/Toolbar";
-import { useQuery } from "@tanstack/react-query";
 
 const width = 250;
 const sxAvatar = { width: 20, height: 20 };
@@ -28,19 +26,10 @@ const sxDrawer = {
 	},
 };
 const sxGrid = { width: "100%" };
-const sxListItemText = { pl: 2 };
 const sxToolbar = { "&.MuiToolbar-root": { pl: 2, pr: 2 } };
 
 export default function Default() {
 	const open = useStore((state) => state.drawerOpen);
-	const { data } = useQuery({
-		queryKey: ["chatHistory"],
-		queryFn: async (): Promise<ChatHistory> => {
-			const res = await fetch("/api/chat/history");
-
-			return res.json();
-		},
-	});
 
 	return (
 		<Drawer anchor="left" open={open} sx={sxDrawer} variant="persistent">
@@ -66,9 +55,7 @@ export default function Default() {
 				<ListItemLibrary />
 				<ListItem />
 				<ListSubheader>Chats</ListSubheader>
-				{data?.items.map(({ key, label }) => (
-					<ListItemText inset key={key} primary={label} sx={sxListItemText} />
-				))}
+				<ChatHistoryItems />
 			</List>
 		</Drawer>
 	);
