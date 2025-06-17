@@ -1,0 +1,11 @@
+import type { TextFieldProps } from "@mui/material/TextField";
+
+export const slotProps: TextFieldProps["slotProps"] = {
+	input: {
+		autoComplete: "off",
+		disableUnderline: true,
+		sx: { border: "none" },
+	},
+};
+export const sxCard = { backgroundColor: "rgb(48,48, 48)" };
+export const sxGrid = { pt: 2, pl: 3, pb: 1, pr: 2 };

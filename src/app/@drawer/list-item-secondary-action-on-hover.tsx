@@ -6,11 +6,16 @@ import useMenu from "@/hooks/use-menu";
 import ListItem, { type ListItemProps } from "@mui/material/ListItem";
 import { useCallback } from "react";
 
+type Props = ListItemProps & {
+	secondaryActionDisabled?: boolean;
+};
+
 export default function ListItemSecondaryActionOnHover({
 	children,
 	secondaryAction,
+	secondaryActionDisabled,
 	...props
-}: ListItemProps) {
+}: Props) {
 	const [anchorEl, handleClick, handleClose] = useMenu();
 	const { onMouseLeave, visible, ...propsHover } =
 		useIsHovered<HTMLLIElement>();
@@ -26,7 +31,8 @@ export default function ListItemSecondaryActionOnHover({
 			{...propsHover}
 			onMouseLeave={onMouseLeave}
 			secondaryAction={
-				visible && (
+				visible &&
+				!secondaryActionDisabled && (
 					<SecondaryAction
 						anchorEl={anchorEl}
 						onClickAction={handleClick}

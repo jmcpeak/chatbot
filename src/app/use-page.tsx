@@ -2,17 +2,10 @@ import useStore from "@/hooks/use-store";
 import type { Breakpoint } from "@mui/system";
 import { useMemo } from "react";
 
-type Tuple = [Breakpoint, { ml: number; mt: string }];
-
-export default function usePage(): Tuple {
+export default function usePage() {
 	const open = useStore((state) => state.drawerOpen);
-	const sx = useMemo(
-		() => ({
-			ml: open ? 31 : 0,
-			mt: "25dvh",
-		}),
-		[open],
-	);
+	const maxWidth: Breakpoint = useMemo(() => (open ? "sm" : "md"), [open]);
+	const sx = useMemo(() => ({ ml: open ? 31 : 0 }), [open]);
 
-	return [open ? "sm" : "md", sx];
+	return { maxWidth, sx };
 }

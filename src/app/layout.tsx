@@ -1,8 +1,8 @@
+import MainWithWidth from "@/app/main-with-width";
 import QueryProvider from "@/app/query-provider";
 import SuccessSnackbar from "@/components/snackbar/success/snackbar";
 import ThemeRegistry from "@/theme-registry";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import Box from "@mui/material/Box";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
@@ -26,12 +26,11 @@ export const metadata: Metadata = {
 type Props = Readonly<{
 	appbar: ReactNode;
 	children: ReactNode;
+	dialog: ReactNode;
 	drawer: ReactNode;
 }>;
 
-const sx = { pt: 8 };
-
-export default function Layout({ appbar, children, drawer }: Props) {
+export default function Layout({ appbar, children, dialog, drawer }: Props) {
 	return (
 		<html lang="en">
 			<body className={`${geistSans.variable} ${geistMono.variable}`}>
@@ -40,10 +39,9 @@ export default function Layout({ appbar, children, drawer }: Props) {
 						<QueryProvider>
 							<SuccessSnackbar />
 							{appbar}
+							{dialog}
 							{drawer}
-							<Box component="main" sx={sx}>
-								{children}
-							</Box>
+							<MainWithWidth>{children}</MainWithWidth>
 						</QueryProvider>
 					</ThemeRegistry>
 				</AppRouterCacheProvider>
