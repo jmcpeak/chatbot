@@ -32,7 +32,7 @@ type StoreData = Pick<
 	| "snackbarOpen"
 	| "streamedResponse"
 >;
-export type StoreActions = Pick<
+type StoreActions = Pick<
 	StoreState,
 	| "setDrawerOpen"
 	| "setNewChatRequested"
@@ -52,6 +52,8 @@ const initialState = {
 	snackbarOpen: false,
 	streamedResponse: [],
 };
+
+export type Store = StoreData & StoreActions;
 
 const stateCreator = combine<StoreData, StoreActions>(initialState, (set) => ({
 	setDrawerOpen: (next) => {

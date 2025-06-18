@@ -1,4 +1,4 @@
-import useStore from "@/hooks/use-store";
+import useStore, { type Store } from "@/hooks/use-store";
 import { useMutation } from "@tanstack/react-query";
 import {
 	type ChangeEvent,
@@ -6,6 +6,7 @@ import {
 	useCallback,
 	useState,
 } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 type Tuple = [
 	boolean,
@@ -15,12 +16,15 @@ type Tuple = [
 	(e: KeyboardEvent<HTMLInputElement | HTMLDivElement>) => void,
 ];
 
+const selector = (state: Store) => ({
+	streamedResponse: state.streamedResponse.at(0) ?? "",
+	setStreamedResponse: state.setStreamedResponse,
+});
+
 export default function useInput(): Tuple {
 	const [input, setInput] = useState("");
-	const streamedResponse = useStore(
-		(store) => store.streamedResponse.at(0) ?? "",
-	);
-	const setStreamedResponse = useStore((store) => store.setStreamedResponse);
+	const shallowSelector = useShallow(selector);
+	const { streamedResponse, setStreamedResponse } = useStore(shallowSelector);
 	const { mutate, isPending } = useMutation({
 		mutationKey: ["mutateStream"],
 		mutationFn: async (prompt: string) => {

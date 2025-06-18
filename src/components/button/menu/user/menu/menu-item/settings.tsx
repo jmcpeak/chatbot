@@ -1,6 +1,6 @@
 "use client";
 
-import useStore, { type StoreActions } from "@/hooks/use-store";
+import useStore, { type Store } from "@/hooks/use-store";
 import SettingsOutlined from "@mui/icons-material/SettingsOutlined";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,7 +10,7 @@ type Props = {
 	onCloseAction: () => void;
 };
 
-const selector = (state: StoreActions) => state.setSettingsDialogOpen;
+const selector = (state: Store) => state.setSettingsDialogOpen;
 
 export default function Settings({ onCloseAction }: Props) {
 	const setOpen = useStore(selector);
