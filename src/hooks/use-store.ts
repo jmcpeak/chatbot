@@ -1,95 +1,114 @@
-import { create } from "zustand/index";
-import { combine } from "zustand/middleware";
+import { create } from "zustand";
+import { combine, devtools } from "zustand/middleware";
 
 type StoreState = {
 	drawerOpen: boolean;
+	newChatRequested: boolean;
 	personalizeDialogOpen: boolean;
 	settingsDialogOpen: boolean;
 	snackbarMessage: string;
 	snackbarOpen: boolean;
-	setDrawerOpen: (nextOpen: ((prev: boolean) => boolean) | boolean) => void;
+	streamedResponse: string[];
+	setDrawerOpen: (next: ((prev: boolean) => boolean) | boolean) => void;
+	setNewChatRequested: (next: ((prev: boolean) => boolean) | boolean) => void;
 	setPersonalizeDialogOpen: (
-		nextOpen: ((prev: boolean) => boolean) | boolean,
+		next: ((prev: boolean) => boolean) | boolean,
 	) => void;
-	setSettingsDialogOpen: (
-		nextOpen: ((prev: boolean) => boolean) | boolean,
+	setSettingsDialogOpen: (next: ((prev: boolean) => boolean) | boolean) => void;
+	setSnackbarMessage: (next: ((prev: string) => string) | string) => void;
+	setSnackbarOpen: (next: ((prev: boolean) => boolean) | boolean) => void;
+	setStreamedResponse: (
+		next: ((prev: string[]) => string[]) | string[],
 	) => void;
-	setSnackbarMessage: (
-		nextMessage: ((prev: string) => string) | string,
-	) => void;
-	setSnackbarOpen: (nextOpen: ((prev: boolean) => boolean) | boolean) => void;
 };
 
 type StoreData = Pick<
 	StoreState,
 	| "drawerOpen"
+	| "newChatRequested"
 	| "personalizeDialogOpen"
 	| "settingsDialogOpen"
 	| "snackbarMessage"
 	| "snackbarOpen"
+	| "streamedResponse"
 >;
-type StoreActions = Pick<
+export type StoreActions = Pick<
 	StoreState,
 	| "setDrawerOpen"
+	| "setNewChatRequested"
 	| "setPersonalizeDialogOpen"
 	| "setSettingsDialogOpen"
 	| "setSnackbarMessage"
 	| "setSnackbarOpen"
+	| "setStreamedResponse"
 >;
+
+const initialState = {
+	drawerOpen: true,
+	newChatRequested: false,
+	personalizeDialogOpen: false,
+	settingsDialogOpen: false,
+	snackbarMessage: "",
+	snackbarOpen: false,
+	streamedResponse: [],
+};
 
 /**
  * Custom Zustand store for managing UI state
  */
-export default create(
-	combine<StoreData, StoreActions>(
-		{
-			drawerOpen: true,
-			personalizeDialogOpen: false,
-			settingsDialogOpen: false,
-			snackbarMessage: "",
-			snackbarOpen: false,
-		},
-		(set) => ({
-			setDrawerOpen: (nextOpen) => {
+const useStore = create(
+	devtools(
+		combine<StoreData, StoreActions>(initialState, (set) => ({
+			setDrawerOpen: (next) => {
 				set((state) => ({
 					drawerOpen:
-						typeof nextOpen === "function"
-							? nextOpen(state.drawerOpen)
-							: nextOpen,
+						typeof next === "function" ? next(state.drawerOpen) : next,
 				}));
 			},
-			setPersonalizeDialogOpen: (nextOpen) => {
+			setNewChatRequested: (next) => {
+				set((state) => ({
+					newChatRequested:
+						typeof next === "function" ? next(state.newChatRequested) : next,
+				}));
+			},
+			setPersonalizeDialogOpen: (next) => {
 				set((state) => ({
 					personalizeDialogOpen:
-						typeof nextOpen === "function"
-							? nextOpen(state.personalizeDialogOpen)
-							: nextOpen,
+						typeof next === "function"
+							? next(state.personalizeDialogOpen)
+							: next,
 				}));
 			},
-			setSettingsDialogOpen: (nextOpen) => {
+			setSettingsDialogOpen: (next) => {
 				set((state) => ({
 					settingsDialogOpen:
-						typeof nextOpen === "function"
-							? nextOpen(state.settingsDialogOpen)
-							: nextOpen,
+						typeof next === "function" ? next(state.settingsDialogOpen) : next,
 				}));
 			},
-			setSnackbarMessage: (nextMessage) => {
+			setSnackbarMessage: (next) => {
 				set((state) => ({
 					snackbarMessage:
-						typeof nextMessage === "function"
-							? nextMessage(state.snackbarMessage)
-							: nextMessage,
+						typeof next === "function" ? next(state.snackbarMessage) : next,
 				}));
 			},
-			setSnackbarOpen: (nextOpen) => {
+			setSnackbarOpen: (next) => {
 				set((state) => ({
 					snackbarOpen:
-						typeof nextOpen === "function"
-							? nextOpen(state.snackbarOpen)
-							: nextOpen,
+						typeof next === "function" ? next(state.snackbarOpen) : next,
 				}));
 			},
-		}),
+			setStreamedResponse: (next) => {
+				set((state) => ({
+					streamedResponse:
+						typeof next === "function" ? next(state.streamedResponse) : next,
+				}));
+			},
+		})),
+		{ name: "cfaChatbotStore" },
 	),
 );
+
+// When you're done with the store, devtools needs you to clean it up
+useStore.devtools.cleanup();
+
+export default useStore;

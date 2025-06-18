@@ -2,6 +2,7 @@
 
 import ChatHistoryItems from "@/app/@drawer/chat-history-items";
 import ListItemDrawer from "@/app/@drawer/list-item-drawer";
+import NewChatListItem from "@/app/@drawer/new-chat-list-item";
 import Toolbar from "@/app/@drawer/toolbar";
 import useStore from "@/hooks/use-store";
 import MapsUgcOutlined from "@mui/icons-material/MapsUgcOutlined";
@@ -31,12 +32,7 @@ export default function Default() {
 		<Drawer anchor="left" open={open} sx={sxDrawer} variant="persistent">
 			<Toolbar />
 			<List>
-				<ListItemDrawer
-					href="/"
-					icon={<MapsUgcOutlined fontSize="small" />}
-					shortcut={shortcutNew}
-					text="New chat"
-				/>
+				<NewChatListItem />
 				<ListItemDrawer
 					href="/search"
 					icon={<SearchOutlined fontSize="small" />}

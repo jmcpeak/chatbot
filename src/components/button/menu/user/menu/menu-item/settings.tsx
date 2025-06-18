@@ -1,21 +1,27 @@
 "use client";
 
-import useStore from "@/hooks/use-store";
+import useStore, { type StoreActions } from "@/hooks/use-store";
 import SettingsOutlined from "@mui/icons-material/SettingsOutlined";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MenuItem from "@mui/material/MenuItem";
+import { useCallback } from "react";
 
 type Props = {
 	onCloseAction: () => void;
 };
 
-export default function Settings({ onCloseAction }: Props) {
-	const setOpen = useStore((state) => state.setSettingsDialogOpen);
+const selector = (state: StoreActions) => state.setSettingsDialogOpen;
 
-	const handleClick = async () => {
-		setOpen(true);
-		onCloseAction();
-	};
+export default function Settings({ onCloseAction }: Props) {
+	const setOpen = useStore(selector);
+
+	const handleClick = useCallback(
+		() => async () => {
+			setOpen(true);
+			onCloseAction();
+		},
+		[onCloseAction, setOpen],
+	);
 
 	return (
 		<MenuItem onClick={handleClick}>

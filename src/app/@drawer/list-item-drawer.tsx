@@ -10,21 +10,28 @@ import KeyboardShortcut, {
 } from "@/components/button/keyboard-shortcut";
 import useIsHovered from "@/hooks/use-is-hovered";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
+import ListItemButton, {} from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 
 type Props = {
 	href: string;
 	icon: ReactNode;
+	onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
 	shortcut?: ShortcutProps;
 	text: string;
 };
 
-export default function ListItemDrawer({ href, icon, shortcut, text }: Props) {
+export default function ListItemDrawer({
+	href,
+	icon,
+	onClick,
+	shortcut,
+	text,
+}: Props) {
 	const pathname = usePathname();
 	const { visible, ref, ...propsHover } = useIsHovered();
 
@@ -35,6 +42,7 @@ export default function ListItemDrawer({ href, icon, shortcut, text }: Props) {
 				component={Link}
 				dense
 				href={href}
+				onClick={onClick}
 				selected={pathname === href}
 				sx={sxListItemButton}
 			>

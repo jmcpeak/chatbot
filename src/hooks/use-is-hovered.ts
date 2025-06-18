@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from "react";
+// Ref<HTMLDivElement> | undefined is not assignable to type Ref<HTMLAnchorElement> | undefined
 
 export default function useIsHovered<T extends HTMLElement>() {
 	const [visible, setVisible] = useState(false);
