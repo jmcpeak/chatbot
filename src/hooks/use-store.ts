@@ -43,6 +43,7 @@ export type StoreActions = Pick<
 	| "setStreamedResponse"
 >;
 
+const developmentMode = process.env.NODE_ENV === "development";
 const initialState = {
 	drawerOpen: true,
 	newChatRequested: false,
@@ -104,7 +105,7 @@ const useStore = create(
 				}));
 			},
 		})),
-		{ name: "cfaChatbotStore" },
+		{ enabled: developmentMode, name: "cfaChatbotStore" },
 	),
 );
 

@@ -22,6 +22,7 @@
 			"recommended": true,
 			"nursery": {
 				"all": true,
+				"noProcessEnv": "off",
 				"useExplicitType": "off",
 				"noRestrictedImports": {
 					"level": "error",
