@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { combine, devtools } from "zustand/middleware";
+import { combine } from "zustand/middleware";
 
 type StoreState = {
 	drawerOpen: boolean;
@@ -43,7 +43,6 @@ export type StoreActions = Pick<
 	| "setStreamedResponse"
 >;
 
-const developmentMode = process.env.NODE_ENV === "development";
 const initialState = {
 	drawerOpen: true,
 	newChatRequested: false,
@@ -54,62 +53,48 @@ const initialState = {
 	streamedResponse: [],
 };
 
-/**
- * Custom Zustand store for managing UI state
- */
-const useStore = create(
-	devtools(
-		combine<StoreData, StoreActions>(initialState, (set) => ({
-			setDrawerOpen: (next) => {
-				set((state) => ({
-					drawerOpen:
-						typeof next === "function" ? next(state.drawerOpen) : next,
-				}));
-			},
-			setNewChatRequested: (next) => {
-				set((state) => ({
-					newChatRequested:
-						typeof next === "function" ? next(state.newChatRequested) : next,
-				}));
-			},
-			setPersonalizeDialogOpen: (next) => {
-				set((state) => ({
-					personalizeDialogOpen:
-						typeof next === "function"
-							? next(state.personalizeDialogOpen)
-							: next,
-				}));
-			},
-			setSettingsDialogOpen: (next) => {
-				set((state) => ({
-					settingsDialogOpen:
-						typeof next === "function" ? next(state.settingsDialogOpen) : next,
-				}));
-			},
-			setSnackbarMessage: (next) => {
-				set((state) => ({
-					snackbarMessage:
-						typeof next === "function" ? next(state.snackbarMessage) : next,
-				}));
-			},
-			setSnackbarOpen: (next) => {
-				set((state) => ({
-					snackbarOpen:
-						typeof next === "function" ? next(state.snackbarOpen) : next,
-				}));
-			},
-			setStreamedResponse: (next) => {
-				set((state) => ({
-					streamedResponse:
-						typeof next === "function" ? next(state.streamedResponse) : next,
-				}));
-			},
-		})),
-		{ enabled: developmentMode, name: "cfaChatbotStore" },
-	),
-);
+const stateCreator = combine<StoreData, StoreActions>(initialState, (set) => ({
+	setDrawerOpen: (next) => {
+		set((state) => ({
+			drawerOpen: typeof next === "function" ? next(state.drawerOpen) : next,
+		}));
+	},
+	setNewChatRequested: (next) => {
+		set((state) => ({
+			newChatRequested:
+				typeof next === "function" ? next(state.newChatRequested) : next,
+		}));
+	},
+	setPersonalizeDialogOpen: (next) => {
+		set((state) => ({
+			personalizeDialogOpen:
+				typeof next === "function" ? next(state.personalizeDialogOpen) : next,
+		}));
+	},
+	setSettingsDialogOpen: (next) => {
+		set((state) => ({
+			settingsDialogOpen:
+				typeof next === "function" ? next(state.settingsDialogOpen) : next,
+		}));
+	},
+	setSnackbarMessage: (next) => {
+		set((state) => ({
+			snackbarMessage:
+				typeof next === "function" ? next(state.snackbarMessage) : next,
+		}));
+	},
+	setSnackbarOpen: (next) => {
+		set((state) => ({
+			snackbarOpen:
+				typeof next === "function" ? next(state.snackbarOpen) : next,
+		}));
+	},
+	setStreamedResponse: (next) => {
+		set((state) => ({
+			streamedResponse:
+				typeof next === "function" ? next(state.streamedResponse) : next,
+		}));
+	},
+}));
 
-// When you're done with the store, devtools needs you to clean it up
-useStore.devtools.cleanup();
-
-export default useStore;
+export default create(stateCreator);
