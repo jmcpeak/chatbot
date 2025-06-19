@@ -1,9 +1,11 @@
-import useStore from "@/hooks/use-store";
+import useStore, { type Store } from "@/hooks/use-store";
 import type { Breakpoint } from "@mui/system";
 import { useMemo } from "react";
 
+const selector = (state: Store) => state.drawerOpen;
+
 export default function usePage() {
-	const open = useStore((state) => state.drawerOpen);
+	const open = useStore(selector);
 	const maxWidth: Breakpoint = useMemo(() => (open ? "sm" : "md"), [open]);
 	const sx = useMemo(() => ({ ml: open ? 31 : 0 }), [open]);
 

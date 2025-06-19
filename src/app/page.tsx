@@ -8,6 +8,10 @@ import ThinkingSkeleton from "@/components/thinking-skeleton";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
@@ -29,11 +33,27 @@ export default function Home() {
 		<Box sx={sxBox}>
 			{isPending && <ThinkingSkeleton active />}
 			{response !== "" && (
-				<Paper elevation={3} sx={sxPaper}>
-					<Typography variant="body1" component="h1" sx={sxTypography}>
-						{response}
-					</Typography>
-				</Paper>
+				<>
+					<Paper elevation={3} sx={sxPaper}>
+						<List>
+							<ListItem>
+								<ListItemButton>
+									<ListItemText primary="Bob" />
+								</ListItemButton>
+							</ListItem>
+							<ListItem>
+								<ListItemButton>
+									<ListItemText primary="Tom" />
+								</ListItemButton>
+							</ListItem>
+						</List>
+					</Paper>
+					<Paper elevation={3} sx={sxPaper}>
+						<Typography variant="body1" component="h1" sx={sxTypography}>
+							{response}
+						</Typography>
+					</Paper>
+				</>
 			)}
 			<Container
 				maxWidth={maxWidth}

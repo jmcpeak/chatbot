@@ -23,8 +23,9 @@ const selector = (state: Store) => ({
 
 export default function useInput(): Tuple {
 	const [input, setInput] = useState("");
-	const shallowSelector = useShallow(selector);
-	const { streamedResponse, setStreamedResponse } = useStore(shallowSelector);
+	const { streamedResponse, setStreamedResponse } = useStore(
+		useShallow(selector),
+	);
 	const { mutate, isPending } = useMutation({
 		mutationKey: ["mutateStream"],
 		mutationFn: async (prompt: string) => {

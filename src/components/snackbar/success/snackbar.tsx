@@ -28,7 +28,10 @@ const slotProps = {
 };
 const slots = { transition: Slide } as SnackbarSlots;
 
-export default function Snackbar({ ...props }: SnackbarProps) {
+export default function Snackbar({
+	autoHideDuration = 3000,
+	...props
+}: SnackbarProps) {
 	const [message, open, handleClose] = useSnackbar();
 
 	const action = (
@@ -46,7 +49,7 @@ export default function Snackbar({ ...props }: SnackbarProps) {
 		<MuiSnackbar
 			action={action}
 			anchorOrigin={anchorOrigin}
-			autoHideDuration={4000}
+			autoHideDuration={autoHideDuration}
 			message={message}
 			onClose={handleClose}
 			open={open}

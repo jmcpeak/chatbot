@@ -1,7 +1,7 @@
 "use client";
 
 import SecondaryAction from "@/app/@drawer/secondary-action";
-import useIsHovered from "@/hooks/use-is-hovered";
+import useIsHovering from "@/hooks/use-is-hovering";
 import useMenu from "@/hooks/use-menu";
 import ListItem, { type ListItemProps } from "@mui/material/ListItem";
 import { useCallback } from "react";
@@ -17,8 +17,7 @@ export default function ListItemSecondaryActionOnHover({
 	...props
 }: Props) {
 	const [anchorEl, handleClick, handleClose] = useMenu();
-	const { onMouseLeave, visible, ...propsHover } =
-		useIsHovered<HTMLLIElement>();
+	const { hovering, onMouseEnter, onMouseLeave } = useIsHovering();
 
 	const handleCloseAndUnhover = useCallback(() => {
 		handleClose();
@@ -28,10 +27,10 @@ export default function ListItemSecondaryActionOnHover({
 	return (
 		<ListItem
 			{...props}
-			{...propsHover}
+			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 			secondaryAction={
-				visible &&
+				hovering &&
 				!secondaryActionDisabled && (
 					<SecondaryAction
 						anchorEl={anchorEl}

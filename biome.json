@@ -23,6 +23,7 @@
 			"nursery": {
 				"all": true,
 				"noProcessEnv": "off",
+				"noSecrets": "off",
 				"useExplicitType": "off",
 				"noRestrictedImports": {
 					"level": "error",

@@ -4,7 +4,7 @@ import MapsUgcOutlined from "@mui/icons-material/MapsUgcOutlined";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 
-const shortcutNew = { mac: "⇧ ⌘ O", windows: "Ctrl Shift O" };
+const shortcut = { mac: "⇧ ⌘ O", windows: "Ctrl Shift O" };
 
 export default function NewChatListItem() {
 	const queryClient = useQueryClient();
@@ -21,7 +21,7 @@ export default function NewChatListItem() {
 			href="/"
 			icon={<MapsUgcOutlined fontSize="small" />}
 			onClick={handleClick}
-			shortcut={shortcutNew}
+			shortcut={shortcut}
 			text="New chat"
 		/>
 	);

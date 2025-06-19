@@ -9,16 +9,18 @@ type StoreState = {
 	snackbarMessage: string;
 	snackbarOpen: boolean;
 	streamedResponse: string[];
-	setDrawerOpen: (next: ((prev: boolean) => boolean) | boolean) => void;
-	setNewChatRequested: (next: ((prev: boolean) => boolean) | boolean) => void;
-	setPersonalizeDialogOpen: (
-		next: ((prev: boolean) => boolean) | boolean,
+	setDrawerOpen: (open: ((prev: boolean) => boolean) | boolean) => void;
+	setNewChatRequested: (
+		requested: ((prev: boolean) => boolean) | boolean,
 	) => void;
-	setSettingsDialogOpen: (next: ((prev: boolean) => boolean) | boolean) => void;
-	setSnackbarMessage: (next: ((prev: string) => string) | string) => void;
-	setSnackbarOpen: (next: ((prev: boolean) => boolean) | boolean) => void;
+	setPersonalizeDialogOpen: (
+		open: ((prev: boolean) => boolean) | boolean,
+	) => void;
+	setSettingsDialogOpen: (open: ((prev: boolean) => boolean) | boolean) => void;
+	setSnackbarMessage: (message: ((prev: string) => string) | string) => void;
+	setSnackbarOpen: (open: ((prev: boolean) => boolean) | boolean) => void;
 	setStreamedResponse: (
-		next: ((prev: string[]) => string[]) | string[],
+		response: ((prev: string[]) => string[]) | string[],
 	) => void;
 };
 
