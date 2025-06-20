@@ -1,5 +1,6 @@
 "use client";
 
+import Container from "@mui/material/Container";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
@@ -74,24 +75,26 @@ const imageLoader = ({ src = "", width = 0, quality = 75 }) => {
 
 export default function TitlebarBelowImageList() {
 	return (
-		<ImageList cols={3} rowHeight={248}>
-			{itemData.map((item) => (
-				<ImageListItem key={item.img}>
-					<Image
-						alt={item.title}
-						height={248}
-						loader={imageLoader}
-						priority
-						src={`${item.img}`}
-						width={248}
-					/>
-					<ImageListItemBar
-						title={item.title}
-						subtitle={<span>by: {item.author}</span>}
-						position="below"
-					/>
-				</ImageListItem>
-			))}
-		</ImageList>
+		<Container maxWidth="md">
+			<ImageList cols={3} rowHeight={248}>
+				{itemData.map((item) => (
+					<ImageListItem key={item.img}>
+						<Image
+							alt={item.title}
+							height={248}
+							loader={imageLoader}
+							priority
+							src={`${item.img}`}
+							width={248}
+						/>
+						<ImageListItemBar
+							title={item.title}
+							subtitle={<span>by: {item.author}</span>}
+							position="below"
+						/>
+					</ImageListItem>
+				))}
+			</ImageList>
+		</Container>
 	);
 }
