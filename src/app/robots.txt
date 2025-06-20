@@ -8,4 +8,4 @@ Disallow: /
 User-Agent: Bingbot
 Disallow: /
 
-Sitemap: https://acme.com/sitemap.xml
+Sitemap: https://chatbot-git-main-jason-mcpeaks-projects.vercel.app/sitemap.xml
