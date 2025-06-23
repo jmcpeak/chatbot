@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function Personalize({ onCloseAction }: Props) {
-	const setOpen = useStore((state) => state.setPersonalizeDialogOpen);
+	const setOpen = useStore((state) => state.setDialogPersonalizeOpen);
 
 	const handleClick = () => {
 		setOpen(true);

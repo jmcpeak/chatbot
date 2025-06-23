@@ -1,17 +1,19 @@
 "use client";
 
-import SecondaryAction from "@/app/@drawer/secondary-action";
+import MoreMenuAndButton from "@/components/more-menu-and-button";
 import useIsHovering from "@/hooks/use-is-hovering";
 import useMenu from "@/hooks/use-menu";
 import ListItem, { type ListItemProps } from "@mui/material/ListItem";
 import { useCallback } from "react";
 
 type Props = ListItemProps & {
+	id: string;
 	secondaryActionDisabled?: boolean;
 };
 
 export default function ListItemSecondaryActionOnHover({
 	children,
+	id,
 	secondaryAction,
 	secondaryActionDisabled,
 	...props
@@ -32,8 +34,9 @@ export default function ListItemSecondaryActionOnHover({
 			secondaryAction={
 				hovering &&
 				!secondaryActionDisabled && (
-					<SecondaryAction
+					<MoreMenuAndButton
 						anchorEl={anchorEl}
+						id={id}
 						onClickAction={handleClick}
 						onCloseAction={handleCloseAndUnhover}
 					/>

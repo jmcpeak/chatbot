@@ -4,7 +4,7 @@ import {
 	type ChangeEvent,
 	type KeyboardEvent,
 	useCallback,
-	useState,
+	useEffect,
 } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -17,15 +17,23 @@ type Tuple = [
 ];
 
 const selector = (state: Store) => ({
+	prompt: state.prompt,
+	setPrompt: state.setPrompt,
+	setPromptMutator: state.setPromptMutator,
+	setPromptSubmitColor: state.setPromptSubmitColor,
 	streamedResponse: state.streamedResponse.at(0) ?? "",
 	setStreamedResponse: state.setStreamedResponse,
 });
 
 export default function useInput(): Tuple {
-	const [input, setInput] = useState("");
-	const { streamedResponse, setStreamedResponse } = useStore(
-		useShallow(selector),
-	);
+	const {
+		prompt,
+		setPrompt,
+		setPromptMutator,
+		setPromptSubmitColor,
+		streamedResponse,
+		setStreamedResponse,
+	} = useStore(useShallow(selector));
 	const { mutate, isPending } = useMutation({
 		mutationKey: ["mutateStream"],
 		mutationFn: async (prompt: string) => {
@@ -51,19 +59,24 @@ export default function useInput(): Tuple {
 
 	const handleChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-			setInput(e.target.value);
+			setPrompt(e.target.value);
 		},
-		[],
+		[setPrompt],
 	);
 	const handleKeyDown = useCallback(
 		(e: KeyboardEvent<HTMLInputElement | HTMLDivElement>) => {
 			if (e.key === "Enter") {
-				mutate(input);
-				setInput("");
+				mutate(prompt);
+				setPrompt("");
+				setPromptSubmitColor("error");
 			}
 		},
-		[input, mutate],
+		[mutate, prompt, setPrompt, setPromptSubmitColor],
 	);
 
-	return [isPending, input, streamedResponse, handleChange, handleKeyDown];
+	useEffect(() => {
+		setPromptMutator(mutate);
+	}, [mutate, setPromptMutator]);
+
+	return [isPending, prompt, streamedResponse, handleChange, handleKeyDown];
 }

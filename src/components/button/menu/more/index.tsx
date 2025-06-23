@@ -1,6 +1,5 @@
-"use client";
-
 import useMenu from "@/hooks/use-menu";
+import useStore, { type Store } from "@/hooks/use-store";
 import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
 import Inventory2Outlined from "@mui/icons-material/Inventory2Outlined";
 import MoreHoriz from "@mui/icons-material/MoreHoriz";
@@ -8,11 +7,19 @@ import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { useCallback } from "react";
 
+const selector = (state: Store) => state.setDialogDeleteChatOpen;
 const sx = { color: "warning.main" };
 
 export default function More() {
 	const [anchorEl, handleClick, handleClose] = useMenu();
+	const setDialogDeleteChatOpen = useStore(selector);
+
+	const handleClickDelete = useCallback(() => {
+		handleClose();
+		setDialogDeleteChatOpen(true);
+	}, [handleClose, setDialogDeleteChatOpen]);
 
 	return (
 		<>
@@ -38,7 +45,7 @@ export default function More() {
 					</ListItemIcon>
 					Archive
 				</MenuItem>
-				<MenuItem onClick={handleClose} sx={sx}>
+				<MenuItem onClick={handleClickDelete} sx={sx}>
 					<ListItemIcon>
 						<DeleteOutlined color="warning" />
 					</ListItemIcon>

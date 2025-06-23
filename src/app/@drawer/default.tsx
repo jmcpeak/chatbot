@@ -5,7 +5,6 @@ import ListItemDrawer from "@/app/@drawer/list-item-drawer";
 import NewChatListItem from "@/app/@drawer/new-chat-list-item";
 import Toolbar from "@/app/@drawer/toolbar";
 import useStore from "@/hooks/use-store";
-import MapsUgcOutlined from "@mui/icons-material/MapsUgcOutlined";
 import PhotoLibraryOutlined from "@mui/icons-material/PhotoLibraryOutlined";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import Drawer from "@mui/material/Drawer";
@@ -14,7 +13,6 @@ import ListItem from "@mui/material/ListItem";
 import ListSubheader from "@mui/material/ListSubheader";
 
 const width = 250;
-const shortcutNew = { mac: "⇧ ⌘ O", windows: "Ctrl Shift O" };
 const shortcutSearch = { mac: "⌘ K", windows: "Ctrl K" };
 const sxDrawer = {
 	width,

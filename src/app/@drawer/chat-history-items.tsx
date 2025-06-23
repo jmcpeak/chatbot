@@ -2,17 +2,17 @@
 
 import { sxListItem, sxListItemButton } from "@/app/@drawer/consts";
 import ListItemSecondaryActionOnHover from "@/app/@drawer/list-item-secondary-action-on-hover";
-import type { ChatHistory } from "@/app/api/chat/history/route";
-import useIdFromPathname from "@/hooks/use-id-from-pathname";
+import type { ChatHistory } from "@/app/api/chat/history/consts";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const sxListItemText = { pl: 2 };
 
 export default function ChatHistoryItems({ secondaryActionDisabled = false }) {
-	const idFromPath = useIdFromPathname();
+	const { id: idParam } = useParams();
 	const { data } = useQuery({
 		queryKey: ["chatHistory"],
 		queryFn: async (): Promise<ChatHistory> => {
@@ -26,6 +26,7 @@ export default function ChatHistoryItems({ secondaryActionDisabled = false }) {
 		<ListItemSecondaryActionOnHover
 			disablePadding
 			disableGutters
+			id={id}
 			key={key}
 			secondaryActionDisabled={secondaryActionDisabled}
 			sx={sxListItem}
@@ -35,7 +36,7 @@ export default function ChatHistoryItems({ secondaryActionDisabled = false }) {
 				dense
 				disableGutters
 				href={`/c/${id}`}
-				selected={id === idFromPath}
+				selected={id === idParam}
 				sx={sxListItemButton}
 			>
 				<ListItemText inset primary={label} sx={sxListItemText} />

@@ -1,6 +1,6 @@
 "use client";
 
-import useInput from "@/app/example/use-input";
+import useInput from "@/app/use-input";
 import usePage from "@/app/use-page";
 import CardPrompt from "@/components/card/prompt/card-prompt";
 import SystemHeaderMessage from "@/components/grid/system-header-message/system-header-message";

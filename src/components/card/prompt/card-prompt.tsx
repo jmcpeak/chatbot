@@ -1,4 +1,4 @@
-import PromptTools from "@/app/prompt-tools";
+import Actions from "@/components/card/prompt/actions/actions";
 import CardPromptWarning from "@/components/card/prompt/card-prompt-warning";
 import { slotProps, sxCard, sxGrid } from "@/components/card/prompt/consts";
 import Box from "@mui/material/Box";
@@ -24,7 +24,7 @@ export default function CardPrompt(props: TextFieldProps) {
 						/>
 					</Grid>
 					<Grid>
-						<PromptTools />
+						<Actions />
 					</Grid>
 				</Grid>
 			</Card>

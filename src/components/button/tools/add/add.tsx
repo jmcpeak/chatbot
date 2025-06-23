@@ -10,12 +10,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 
-export default function PromptTools() {
+export default function ButtonConfirmBusy() {
 	const [anchorEl, handleClick, handleClose] = useMenu();
 
 	return (
 		<>
-			<Tooltip title="PromptTools photos and files">
+			<Tooltip title="ButtonConfirmBusy photos and files">
 				<IconButton
 					aria-controls="more-menu-appbar"
 					aria-haspopup="true"
@@ -37,13 +37,13 @@ export default function PromptTools() {
 					<ListItemIcon>
 						<PhotoLibraryOutlined fontSize="small" />
 					</ListItemIcon>
-					PromptTools photos and files
+					ButtonConfirmBusy photos and files
 				</MenuItem>
 				<MenuItem onClick={handleClose}>
 					<ListItemIcon>
 						<CloudSyncOutlined />
 					</ListItemIcon>
-					PromptTools from apps
+					ButtonConfirmBusy from apps
 				</MenuItem>
 			</Menu>
 		</>

@@ -6,8 +6,8 @@ import Dialog from "@mui/material/Dialog";
 import Divider from "@mui/material/Divider";
 
 export default function Personalize() {
-	const open = useStore((state) => state.personalizeDialogOpen);
-	const setOpen = useStore((state) => state.setPersonalizeDialogOpen);
+	const open = useStore((state) => state.dialogPersonalizeOpen);
+	const setOpen = useStore((state) => state.setDialogPersonalizeOpen);
 
 	const handleClose = () => {
 		setOpen(false);

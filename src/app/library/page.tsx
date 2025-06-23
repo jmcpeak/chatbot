@@ -1,6 +1,8 @@
 "use client";
 
+import Info from "@mui/icons-material/InfoOutlined";
 import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
@@ -69,28 +71,23 @@ const itemData = [
 	},
 ];
 
-const imageLoader = ({ src = "", width = 0, quality = 75 }) => {
-	return `https://images.unsplash.com/${src}?h=auto&w=${width}&q=${quality}`;
+const imageLoader = ({ src = "", quality = 75 }) => {
+	return `https://images.unsplash.com/${src}?w=${248}&q=${quality}`;
 };
 
 export default function TitlebarBelowImageList() {
 	return (
 		<Container maxWidth="md">
-			<ImageList cols={3} rowHeight={248}>
+			<ImageList cols={3}>
 				{itemData.map((item) => (
 					<ImageListItem key={item.img}>
 						<Image
 							alt={item.title}
-							height={248}
+							height={164}
 							loader={imageLoader}
 							priority
-							src={`${item.img}`}
+							src={item.img}
 							width={248}
-						/>
-						<ImageListItemBar
-							title={item.title}
-							subtitle={<span>by: {item.author}</span>}
-							position="below"
 						/>
 					</ImageListItem>
 				))}

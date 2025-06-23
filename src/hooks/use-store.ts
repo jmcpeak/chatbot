@@ -2,62 +2,120 @@ import { create } from "zustand";
 import { combine } from "zustand/middleware";
 
 type StoreState = {
+	dialogDeleteChatId: string;
+	dialogDeleteChatOpen: boolean;
+	dialogPersonalizeOpen: boolean;
 	drawerOpen: boolean;
 	newChatRequested: boolean;
-	personalizeDialogOpen: boolean;
+	prompt: string;
+	promptMutator: (params: string) => void;
+	promptSubmitColor: "primary" | "error";
 	settingsDialogOpen: boolean;
 	snackbarMessage: string;
 	snackbarOpen: boolean;
 	streamedResponse: string[];
+	temporaryChat: boolean;
+
+	setDialogDeleteChatId: (id: ((prev: string) => string) | string) => void;
+	setDialogDeleteChatOpen: (
+		open: ((prev: boolean) => boolean) | boolean,
+	) => void;
+	setDialogPersonalizeOpen: (
+		open: ((prev: boolean) => boolean) | boolean,
+	) => void;
 	setDrawerOpen: (open: ((prev: boolean) => boolean) | boolean) => void;
 	setNewChatRequested: (
 		requested: ((prev: boolean) => boolean) | boolean,
 	) => void;
-	setPersonalizeDialogOpen: (
-		open: ((prev: boolean) => boolean) | boolean,
-	) => void;
 	setSettingsDialogOpen: (open: ((prev: boolean) => boolean) | boolean) => void;
 	setSnackbarMessage: (message: ((prev: string) => string) | string) => void;
+	setPrompt: (prompt: ((prev: string) => string) | string) => void;
+	setPromptMutator: (next: (params: string) => void) => void;
+	setPromptSubmitColor: (
+		color:
+			| ((prev: "primary" | "error") => "primary" | "error")
+			| "primary"
+			| "error",
+	) => void;
 	setSnackbarOpen: (open: ((prev: boolean) => boolean) | boolean) => void;
 	setStreamedResponse: (
 		response: ((prev: string[]) => string[]) | string[],
+	) => void;
+	setTemporaryChat: (
+		temporaryChat: ((prev: boolean) => boolean) | boolean,
 	) => void;
 };
 
 type StoreData = Pick<
 	StoreState,
+	| "dialogDeleteChatId"
+	| "dialogDeleteChatOpen"
+	| "dialogPersonalizeOpen"
 	| "drawerOpen"
 	| "newChatRequested"
-	| "personalizeDialogOpen"
+	| "prompt"
+	| "promptMutator"
+	| "promptSubmitColor"
 	| "settingsDialogOpen"
 	| "snackbarMessage"
 	| "snackbarOpen"
 	| "streamedResponse"
+	| "temporaryChat"
 >;
 type StoreActions = Pick<
 	StoreState,
+	| "setDialogDeleteChatId"
+	| "setDialogDeleteChatOpen"
+	| "setDialogPersonalizeOpen"
 	| "setDrawerOpen"
 	| "setNewChatRequested"
-	| "setPersonalizeDialogOpen"
+	| "setPrompt"
+	| "setPromptMutator"
+	| "setPromptSubmitColor"
 	| "setSettingsDialogOpen"
 	| "setSnackbarMessage"
 	| "setSnackbarOpen"
 	| "setStreamedResponse"
+	| "setTemporaryChat"
 >;
 
 const initialState = {
+	dialogDeleteChatId: "",
+	dialogDeleteChatOpen: false,
+	dialogPersonalizeOpen: false,
 	drawerOpen: true,
 	newChatRequested: false,
-	personalizeDialogOpen: false,
+	prompt: "",
+	promptMutator: () => {},
+	promptSubmitColor: "primary" as const,
 	settingsDialogOpen: false,
 	snackbarMessage: "",
 	snackbarOpen: false,
 	streamedResponse: [],
+	temporaryChat: false,
 };
 
 export type Store = StoreData & StoreActions;
 
 const stateCreator = combine<StoreData, StoreActions>(initialState, (set) => ({
+	setDialogDeleteChatId: (next) => {
+		set((state) => ({
+			dialogDeleteChatId:
+				typeof next === "function" ? next(state.dialogDeleteChatId) : next,
+		}));
+	},
+	setDialogDeleteChatOpen: (next) => {
+		set((state) => ({
+			dialogDeleteChatOpen:
+				typeof next === "function" ? next(state.dialogDeleteChatOpen) : next,
+		}));
+	},
+	setDialogPersonalizeOpen: (next) => {
+		set((state) => ({
+			dialogPersonalizeOpen:
+				typeof next === "function" ? next(state.dialogPersonalizeOpen) : next,
+		}));
+	},
 	setDrawerOpen: (next) => {
 		set((state) => ({
 			drawerOpen: typeof next === "function" ? next(state.drawerOpen) : next,
@@ -69,10 +127,20 @@ const stateCreator = combine<StoreData, StoreActions>(initialState, (set) => ({
 				typeof next === "function" ? next(state.newChatRequested) : next,
 		}));
 	},
-	setPersonalizeDialogOpen: (next) => {
+	setPrompt: (next) => {
 		set((state) => ({
-			personalizeDialogOpen:
-				typeof next === "function" ? next(state.personalizeDialogOpen) : next,
+			prompt: typeof next === "function" ? next(state.prompt) : next,
+		}));
+	},
+	setPromptMutator: (next: (params: string) => void) => {
+		set(() => ({
+			promptMutator: next,
+		}));
+	},
+	setPromptSubmitColor: (next) => {
+		set((state) => ({
+			promptSubmitColor:
+				typeof next === "function" ? next(state.promptSubmitColor) : next,
 		}));
 	},
 	setSettingsDialogOpen: (next) => {
@@ -97,6 +165,12 @@ const stateCreator = combine<StoreData, StoreActions>(initialState, (set) => ({
 		set((state) => ({
 			streamedResponse:
 				typeof next === "function" ? next(state.streamedResponse) : next,
+		}));
+	},
+	setTemporaryChat: (next) => {
+		set((state) => ({
+			temporaryChat:
+				typeof next === "function" ? next(state.temporaryChat) : next,
 		}));
 	},
 }));

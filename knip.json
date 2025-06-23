@@ -1,10 +1,12 @@
 {
 	"ignore": [
+		"**/*.test.tsx",
 		"jest.config.js",
 		"jest.setup.js",
-		"**/*.test.tsx",
-		"tests-examples/**",
-		"src/hooks/use-drawer-effect.ts"
+		"src/components/button/menu/more/index.tsx",
+		"src/components/button/temporary-chat/use-temporary-chat.tsx",
+		"src/hooks/use-drawer-effect.ts",
+		"tests-examples/**"
 	],
 	"ignoreDependencies": ["@redux-devtools/extension"]
 }
