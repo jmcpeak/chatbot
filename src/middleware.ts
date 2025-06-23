@@ -8,8 +8,8 @@ const generateNonce = (): string => {
 };
 const generateContentSecurityPolicy = (nonce: string): string => {
 	return `
-  script-src 'self' ${isProd ? `nonce-${nonce}` : "'unsafe-inline'"} https://vercel.live;
-  style-src 'self' ${isProd ? `nonce-${nonce}` : "'unsafe-inline'"} https://fonts.googleapis.com;
+  script-src 'self' ${isProd ? `nonce-${nonce} https://vercel.live` : "'unsafe-inline'"};
+  style-src 'self' ${isProd ? `nonce-${nonce} https://fonts.googleapis.com` : "'unsafe-inline'"};
   default-src 'self';
   img-src 'self' https://images.unsplash.com;
   font-src 'self' https://fonts.gstatic.com;
