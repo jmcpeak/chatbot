@@ -7,5 +7,4 @@ export const slotProps: TextFieldProps["slotProps"] = {
 		sx: { border: "none" },
 	},
 };
-export const sxCard = { backgroundColor: "rgb(48,48, 48)" };
 export const sxGrid = { pt: 2, pl: 3, pb: 1, pr: 2 };

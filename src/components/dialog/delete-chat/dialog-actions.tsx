@@ -1,6 +1,6 @@
 "use client";
 
-import useDeleteChatById from "@/components/dialog/delete-chat/use-delete-chat-by-id";
+import useArchiveOrDeleteChatById from "@/components/dialog/delete-chat/use-archive-or-delete-chat-by-id";
 import useStore, { type Store } from "@/hooks/use-store";
 import Button from "@mui/material/Button";
 import DialogActionsMui from "@mui/material/DialogActions";
@@ -10,7 +10,7 @@ const selector = (state: Store) => state.setDialogDeleteChatOpen;
 
 export default function DialogActions({ id = "" }) {
 	const setDialogDeleteChatOpen = useStore(selector);
-	const { mutate, isPending, isSuccess } = useDeleteChatById();
+	const { mutate, isPending, isSuccess } = useArchiveOrDeleteChatById(true);
 
 	const handleCancel = useCallback(() => {
 		setDialogDeleteChatOpen(false);

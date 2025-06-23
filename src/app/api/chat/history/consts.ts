@@ -23,7 +23,6 @@ export type ChatHistoryItem = {
 export type ChatHistory = {
 	items: ChatHistoryItem[];
 };
-export type ChatHistoryRouteProps = { params: { id: string } };
 
 export const items: ChatHistoryItem[] = [
 	{

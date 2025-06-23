@@ -1,23 +1,16 @@
-import {
-	type ChatHistoryRouteProps,
-	items,
-} from "@/app/api/chat/history/consts";
+import { items } from "@/app/api/chat/history/consts";
 import { NextResponse } from "next/server";
 
-export async function GET(
-	_request: Request,
-	{ params }: ChatHistoryRouteProps,
-) {
+type Params = { params: Promise<{ id: string }> };
+
+export async function GET(_request: Request, { params }: Params) {
 	const { id } = await params;
 	const item = items.find((item) => item.id === id);
 
 	return NextResponse.json(item);
 }
 
-export async function DELETE(
-	_request: Request,
-	{ params }: ChatHistoryRouteProps,
-) {
+export async function DELETE(_request: Request, { params }: Params) {
 	const { id } = await params;
 	const index = items.findIndex((item) => item.id === id);
 

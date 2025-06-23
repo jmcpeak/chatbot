@@ -9,7 +9,7 @@ const selector = (state: Store) => ({
 	setDialogDeleteChatId: state.setDialogDeleteChatId,
 });
 
-export default function useDeleteChatById() {
+export default function useArchiveOrDeleteChatById(permanent = false) {
 	const { dialogDeleteChatId, setDialogDeleteChatId } = useStore(
 		useShallow(selector),
 	);
@@ -19,9 +19,12 @@ export default function useDeleteChatById() {
 	return useMutation({
 		mutationKey: ["mutateChatHistoryDeleteById"],
 		mutationFn: async (id: ParamValue) => {
-			const res = await fetch(`/api/chat/history/${id}`, {
-				method: "DELETE",
-			});
+			const res = await fetch(
+				`/api/chat/history/${id}${permanent ? "?permanent" : ""}`,
+				{
+					method: "DELETE",
+				},
+			);
 
 			if (!res.ok) throw new Error("Failed to delete chat");
 			return res.json();
