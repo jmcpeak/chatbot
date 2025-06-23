@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-const isProd = process.env.NODE_ENV !== "production";
+const isProd = process.env.NODE_ENV === "production";
 const generateNonce = (): string => {
 	return Array.from(crypto.getRandomValues(new Uint8Array(16)))
 		.map((b) => b.toString(16).padStart(2, "0"))
