@@ -22,18 +22,14 @@ export const metadata: Metadata = {
 	metadataBase: new URL(
 		"https://chatbot-git-main-jason-mcpeaks-projects.vercel.app",
 	),
+	openGraph: {
+		images: "/opengraph-image.png",
+	},
+	twitter: {
+		images: "/opengraph-image.png",
+	},
 	title: "CFA-GPT",
 	description: "Latest CFA data and insights powered by AI",
-	openGraph: {
-		images: [
-			{
-				url: "/opengraph-image.png",
-				width: 1000,
-				height: 211,
-				alt: "CFA-GPT Logo",
-			},
-		],
-	},
 };
 
 type Props = Readonly<{
