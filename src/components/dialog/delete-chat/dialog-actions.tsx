@@ -1,6 +1,6 @@
 "use client";
 
-import useArchiveOrDeleteChatById from "@/components/dialog/delete-chat/use-archive-or-delete-chat-by-id";
+import useArchiveOrDeleteChatById from "@/hooks/mutations/use-archive-or-delete-chat-by-id";
 import useStore, { type Store } from "@/hooks/use-store";
 import Button from "@mui/material/Button";
 import DialogActionsMui from "@mui/material/DialogActions";
@@ -8,7 +8,10 @@ import { useCallback, useEffect } from "react";
 
 const selector = (state: Store) => state.setDialogDeleteChatOpen;
 
-export default function DialogActions({ id = "" }) {
+export default function DialogActions({
+	id,
+	isSuccess: isSuccessProp,
+}: { id: string; isSuccess?: boolean }) {
 	const setDialogDeleteChatOpen = useStore(selector);
 	const { mutate, isPending, isSuccess } = useArchiveOrDeleteChatById(true);
 
@@ -32,7 +35,7 @@ export default function DialogActions({ id = "" }) {
 			</Button>
 			<Button
 				color="error"
-				disabled={isPending}
+				disabled={isPending || !isSuccessProp}
 				onClick={handleDelete}
 				size="small"
 				variant="contained"

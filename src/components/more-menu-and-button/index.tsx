@@ -1,6 +1,6 @@
 "use client";
 
-import useArchiveOrDeleteChatById from "@/components/dialog/delete-chat/use-archive-or-delete-chat-by-id";
+import useArchiveOrDeleteChatById from "@/hooks/mutations/use-archive-or-delete-chat-by-id";
 import useStore, { type Store } from "@/hooks/use-store";
 import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
 import DriveFileRenameOutlineOutlined from "@mui/icons-material/DriveFileRenameOutlineOutlined";
@@ -13,6 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { useParams } from "next/navigation";
 import { type MouseEvent, useCallback, useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -31,14 +32,16 @@ const sx = { color: "error.dark" };
 
 export default function MoreMenuAndButton({
 	anchorEl,
-	id,
+	id: idProp,
 	onClickAction,
 	onCloseAction,
 }: Props) {
 	const { setDialogDeleteChatOpen, setDialogDeleteChatId } = useStore(
 		useShallow(selector),
 	);
-	const { mutate, isPending, isSuccess } = useArchiveOrDeleteChatById(false);
+	const { mutate, isPending, isSuccess } = useArchiveOrDeleteChatById();
+	const params = useParams();
+	const id = idProp ? idProp : (params?.id as string | "");
 
 	const handleClickArchive = useCallback(() => {
 		mutate(id);

@@ -1,26 +1,28 @@
 "use client";
 
-import type { ChatHistoryItem } from "@/app/api/chat/history/consts";
+import useChatHistoryById from "@/components/dialog/delete-chat/use-chat-history-by-id";
 import DialogContentMui from "@mui/material/DialogContent";
+import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
-export default function DialogContent({ id = "" }) {
-	const { data } = useQuery({
-		queryKey: ["chatHistoryById"],
-		queryFn: async (): Promise<ChatHistoryItem> => {
-			const res = await fetch(`/api/chat/history/${id}`);
+const sx = { display: "inline-block" };
 
-			return res.json();
-		},
-		enabled: !!id,
-	});
+export default function DialogContent({
+	id,
+	isSuccess,
+}: { id: string; isSuccess?: boolean }) {
+	const { data } = useChatHistoryById(id);
 
 	return (
 		<DialogContentMui>
 			<Typography>
-				This will delete <strong>{data?.label}</strong>.
+				This will delete&nbsp;
+				{isSuccess ? (
+					<strong>{data?.label}</strong>
+				) : (
+					<Skeleton variant="text" width={140} sx={sx} />
+				)}
 			</Typography>
 			<Typography color="textDisabled" variant="caption">
 				Visit <Link href="/">settings</Link> to delete any memories saved during

@@ -1,7 +1,7 @@
 import useStore, { type Store } from "@/hooks/use-store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ParamValue } from "next/dist/server/request/params";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useShallow } from "zustand/react/shallow";
 
 const selector = (state: Store) => ({
@@ -13,6 +13,7 @@ export default function useArchiveOrDeleteChatById(permanent = false) {
 	const { dialogDeleteChatId, setDialogDeleteChatId } = useStore(
 		useShallow(selector),
 	);
+	const params = useParams();
 	const queryClient = useQueryClient();
 	const router = useRouter();
 
@@ -34,6 +35,11 @@ export default function useArchiveOrDeleteChatById(permanent = false) {
 
 			if (dialogDeleteChatId) {
 				setDialogDeleteChatId("");
+
+				if (params.id) {
+					router.push("/");
+				}
+
 				return;
 			}
 
