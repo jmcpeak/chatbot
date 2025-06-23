@@ -83,6 +83,7 @@ const componentsDark = {
 };
 
 export const darkOptions = {
+	cssVariables: true,
 	palette: {
 		mode: "dark" as PaletteMode,
 		background: {
@@ -97,6 +98,7 @@ export const darkOptions = {
 	typography,
 };
 export const lightOptions = {
+	cssVariables: true,
 	palette: {
 		mode: "light" as PaletteMode,
 	},

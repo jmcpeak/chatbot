@@ -5,13 +5,13 @@ import ThemeRegistry from "@/theme-registry";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { headers } from "next/headers";
 import type { ReactNode } from "react";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
 });
-
 const geistMono = Geist_Mono({
 	variable: "--font-geist-mono",
 	subsets: ["latin"],
@@ -39,12 +39,20 @@ type Props = Readonly<{
 	drawer: ReactNode;
 }>;
 
-export default function Layout({ appbar, children, dialog, drawer }: Props) {
+export default async function Layout({
+	appbar,
+	children,
+	dialog,
+	drawer,
+}: Props) {
+	const headersList = await headers();
+	const nonce = headersList.get("x-csp-nonce") ?? "";
+
 	return (
 		<html lang="en">
 			<body className={`${geistSans.variable} ${geistMono.variable}`}>
 				<AppRouterCacheProvider>
-					<ThemeRegistry>
+					<ThemeRegistry nonce={nonce}>
 						<QueryProvider>
 							<SuccessSnackbar />
 							{appbar}
