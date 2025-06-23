@@ -20,16 +20,16 @@ const geistMono = Geist_Mono({
 // biome-ignore lint/nursery/useComponentExportOnlyModules: <explanation>
 export const metadata: Metadata = {
 	metadataBase: new URL(
-		"https://chatbot-git-main-jason-mcpeaks-projects.vercel.app/",
+		"https://chatbot-git-main-jason-mcpeaks-projects.vercel.app",
 	),
 	title: "CFA-GPT",
 	description: "Latest CFA data and insights powered by AI",
 	openGraph: {
 		images: [
 			{
-				url: "/og-image.webp",
-				width: 819,
-				height: 204,
+				url: "/opengraph-image.png",
+				width: 1000,
+				height: 211,
 				alt: "CFA-GPT Logo",
 			},
 		],
