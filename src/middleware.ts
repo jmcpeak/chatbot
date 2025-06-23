@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV !== "production";
 const generateNonce = (): string => {
 	return Array.from(crypto.getRandomValues(new Uint8Array(16)))
 		.map((b) => b.toString(16).padStart(2, "0"))
@@ -8,8 +8,8 @@ const generateNonce = (): string => {
 };
 const generateContentSecurityPolicy = (nonce: string): string => {
 	return `
-  script-src 'self' ${isProd ? `nonce-${nonce} https://vercel.live` : "'unsafe-inline'"};
-  style-src 'self' ${isProd ? `nonce-${nonce} https://fonts.googleapis.com` : "'unsafe-inline'"};
+  script-src 'self' ${isProd ? `'nonce-${nonce}'` : "'unsafe-inline'"} https://vercel.live;
+  style-src 'self' ${isProd ? `'nonce-${nonce}'` : "'unsafe-inline'"} https://fonts.googleapis.com;
   default-src 'self';
   img-src 'self' https://images.unsplash.com;
   font-src 'self' https://fonts.gstatic.com;
