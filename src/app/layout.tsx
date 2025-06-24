@@ -1,5 +1,6 @@
 import MainWithWidth from "@/app/main-with-width";
 import QueryProvider from "@/app/query-provider";
+import DialogSearch from "@/components/dialog/search";
 import SuccessSnackbar from "@/components/snackbar/success/snackbar";
 import ThemeRegistry from "@/theme-registry";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
@@ -17,7 +18,6 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
-// biome-ignore lint/nursery/useComponentExportOnlyModules: <explanation>
 export const metadata: Metadata = {
 	metadataBase: new URL(
 		"https://chatbot-git-main-jason-mcpeaks-projects.vercel.app",
@@ -35,16 +35,10 @@ export const metadata: Metadata = {
 type Props = Readonly<{
 	appbar: ReactNode;
 	children: ReactNode;
-	dialog: ReactNode;
 	drawer: ReactNode;
 }>;
 
-export default async function Layout({
-	appbar,
-	children,
-	dialog,
-	drawer,
-}: Props) {
+export default async function Layout({ appbar, children, drawer }: Props) {
 	const headersList = await headers();
 	const nonce = headersList.get("x-csp-nonce") ?? "";
 
@@ -54,9 +48,9 @@ export default async function Layout({
 				<AppRouterCacheProvider>
 					<ThemeRegistry nonce={nonce}>
 						<QueryProvider>
+							<DialogSearch />
 							<SuccessSnackbar />
 							{appbar}
-							{dialog}
 							{drawer}
 							<MainWithWidth>{children}</MainWithWidth>
 						</QueryProvider>

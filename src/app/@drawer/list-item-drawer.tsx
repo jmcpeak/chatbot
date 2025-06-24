@@ -18,9 +18,11 @@ import { usePathname } from "next/navigation";
 import type { MouseEventHandler, ReactNode } from "react";
 
 type Props = {
-	href: string;
+	href?: string;
 	icon: ReactNode;
-	onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
+	onClick?:
+		| MouseEventHandler<HTMLAnchorElement>
+		| MouseEventHandler<HTMLButtonElement>;
 	shortcut?: ShortcutProps;
 	text: string;
 };
@@ -37,20 +39,35 @@ export default function ListItemDrawer({
 
 	return (
 		<ListItem disablePadding disableGutters sx={sxListItem}>
-			<ListItemButton
-				component={Link}
-				dense
-				href={href}
-				onClick={onClick}
-				onMouseEnter={onMouseEnter}
-				onMouseLeave={onMouseLeave}
-				selected={pathname === href}
-				sx={sxListItemButton}
-			>
-				<ListItemIcon sx={sxListItemIcon}>{icon}</ListItemIcon>
-				<ListItemText primary={text} />
-				<KeyboardShortcut shortcut={shortcut} visible={hovering} />
-			</ListItemButton>
+			{href ? (
+				<ListItemButton
+					component={Link}
+					href={href}
+					dense
+					onMouseEnter={onMouseEnter}
+					onMouseLeave={onMouseLeave}
+					selected={pathname !== "/" && pathname === href}
+					sx={sxListItemButton}
+				>
+					<ListItemIcon sx={sxListItemIcon}>{icon}</ListItemIcon>
+					<ListItemText primary={text} />
+					<KeyboardShortcut shortcut={shortcut} visible={hovering} />
+				</ListItemButton>
+			) : (
+				<ListItemButton
+					component="button"
+					dense
+					onClick={onClick as MouseEventHandler<HTMLButtonElement> | undefined}
+					onMouseEnter={onMouseEnter}
+					onMouseLeave={onMouseLeave}
+					selected={false}
+					sx={sxListItemButton}
+				>
+					<ListItemIcon sx={sxListItemIcon}>{icon}</ListItemIcon>
+					<ListItemText primary={text} />
+					<KeyboardShortcut shortcut={shortcut} visible={hovering} />
+				</ListItemButton>
+			)}
 		</ListItem>
 	);
 }

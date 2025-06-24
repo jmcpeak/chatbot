@@ -4,6 +4,7 @@ export const slotProps: TextFieldProps["slotProps"] = {
 	input: {
 		autoComplete: "off",
 		disableUnderline: true,
+		spellCheck: false,
 		sx: { border: "none" },
 	},
 };

@@ -5,6 +5,7 @@ type StoreState = {
 	dialogDeleteChatId: string;
 	dialogDeleteChatOpen: boolean;
 	dialogPersonalizeOpen: boolean;
+	dialogSearchOpen: boolean;
 	drawerOpen: boolean;
 	newChatRequested: boolean;
 	prompt: string;
@@ -22,6 +23,7 @@ type StoreState = {
 	setDialogPersonalizeOpen: (
 		open: ((prev: boolean) => boolean) | boolean,
 	) => void;
+	setDialogSearchOpen: (open: ((prev: boolean) => boolean) | boolean) => void;
 	setDrawerOpen: (open: ((prev: boolean) => boolean) | boolean) => void;
 	setNewChatRequested: (
 		requested: ((prev: boolean) => boolean) | boolean,
@@ -47,6 +49,7 @@ type StoreData = Pick<
 	| "dialogDeleteChatId"
 	| "dialogDeleteChatOpen"
 	| "dialogPersonalizeOpen"
+	| "dialogSearchOpen"
 	| "drawerOpen"
 	| "newChatRequested"
 	| "prompt"
@@ -62,6 +65,7 @@ export type StoreActions = Pick<
 	| "setDialogDeleteChatId"
 	| "setDialogDeleteChatOpen"
 	| "setDialogPersonalizeOpen"
+	| "setDialogSearchOpen"
 	| "setDrawerOpen"
 	| "setNewChatRequested"
 	| "setPrompt"
@@ -77,6 +81,7 @@ const initialState = {
 	dialogDeleteChatId: "",
 	dialogDeleteChatOpen: false,
 	dialogPersonalizeOpen: false,
+	dialogSearchOpen: false,
 	drawerOpen: true,
 	newChatRequested: false,
 	prompt: "",
@@ -107,6 +112,12 @@ const stateCreator = combine<StoreData, StoreActions>(initialState, (set) => ({
 		set((state) => ({
 			dialogPersonalizeOpen:
 				typeof next === "function" ? next(state.dialogPersonalizeOpen) : next,
+		}));
+	},
+	setDialogSearchOpen: (next) => {
+		set((state) => ({
+			dialogSearchOpen:
+				typeof next === "function" ? next(state.dialogSearchOpen) : next,
 		}));
 	},
 	setDrawerOpen: (next) => {
