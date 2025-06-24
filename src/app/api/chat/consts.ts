@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { put } from "@vercel/blob";
 import { type Adapter, Low } from "lowdb";
 
 type Author = {
@@ -66,9 +66,6 @@ function createVercelBlobAdapter<T>(
 ): Adapter<T> {
 	return {
 		async read(): Promise<T> {
-			const { blobs } = await list();
-
-			console.error("", blobs);
 			try {
 				const res = await fetch(
 					`https://w64xsqhwcqpyluf7.public.blob.vercel-storage.com/${blobKey}`,
