@@ -1,6 +1,6 @@
 "use client";
 
-import useArchiveOrDeleteChatById from "@/hooks/mutations/use-archive-or-delete-chat-by-id";
+import useMutationArchiveOrDeleteChatById from "@/hooks/mutations/use-mutation-archive-or-delete-chat-by-id";
 import useStore, { type Store } from "@/hooks/use-store";
 import Button from "@mui/material/Button";
 import DialogActionsMui from "@mui/material/DialogActions";
@@ -13,7 +13,8 @@ export default function DialogActions({
 	isSuccess: isSuccessProp,
 }: { id: string; isSuccess?: boolean }) {
 	const setDialogDeleteChatOpen = useStore(selector);
-	const { mutate, isPending, isSuccess } = useArchiveOrDeleteChatById(true);
+	const { mutate, isPending, isSuccess } =
+		useMutationArchiveOrDeleteChatById(true);
 
 	const handleCancel = useCallback(() => {
 		setDialogDeleteChatOpen(false);

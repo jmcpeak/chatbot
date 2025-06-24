@@ -62,7 +62,7 @@ type StoreData = Pick<
 	| "streamedResponse"
 	| "temporaryChat"
 >;
-type StoreActions = Pick<
+export type StoreActions = Pick<
 	StoreState,
 	| "setDialogDeleteChatId"
 	| "setDialogDeleteChatOpen"

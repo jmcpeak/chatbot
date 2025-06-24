@@ -9,7 +9,7 @@ const selector = (state: Store) => ({
 	setDialogDeleteChatId: state.setDialogDeleteChatId,
 });
 
-export default function useArchiveOrDeleteChatById(permanent = false) {
+export default function useMutationArchiveOrDeleteChatById(permanent = false) {
 	const { dialogDeleteChatId, setDialogDeleteChatId } = useStore(
 		useShallow(selector),
 	);

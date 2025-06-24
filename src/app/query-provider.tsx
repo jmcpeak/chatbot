@@ -14,7 +14,7 @@ export default function QueryProvider({ children }: { children: ReactNode }) {
 			queryClient: queryClientRef.current,
 			persister: createSyncStoragePersister({ storage: window.localStorage }),
 			maxAge: 1000 * 60 * 60 * 24, // 24 hours
-			buster: "v1",
+			buster: "v2",
 		});
 
 		promise.then(() => setHydrated(true));

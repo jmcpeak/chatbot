@@ -2,31 +2,23 @@
 
 import { sxListItem, sxListItemButton } from "@/app/@drawer/consts";
 import ListItemSecondaryActionOnHover from "@/app/@drawer/list-item-secondary-action-on-hover";
-import type { ChatHistory } from "@/app/api/chat/history/consts";
+import useQueryChatHistory from "@/app/@drawer/use-query-chat-history";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const sxListItemText = { pl: 2 };
 
 export default function ChatHistoryItems({ secondaryActionDisabled = false }) {
-	const { id: idParam } = useParams();
-	const { data } = useQuery({
-		queryKey: ["chatHistory"],
-		queryFn: async (): Promise<ChatHistory> => {
-			const res = await fetch("/api/chat/history");
+	const { id } = useParams();
+	const { data } = useQueryChatHistory();
 
-			return res.json();
-		},
-	});
-
-	return data?.items.map(({ key, label, id }) => (
+	return data?.map(({ key, label, ...props }) => (
 		<ListItemSecondaryActionOnHover
 			disablePadding
 			disableGutters
-			id={id}
+			id={props.id}
 			key={key}
 			secondaryActionDisabled={secondaryActionDisabled}
 			sx={sxListItem}
@@ -35,8 +27,8 @@ export default function ChatHistoryItems({ secondaryActionDisabled = false }) {
 				component={Link}
 				dense
 				disableGutters
-				href={`/c/${id}`}
-				selected={id === idParam}
+				href={`/c/${props.id}`}
+				selected={id === props.id}
 				sx={sxListItemButton}
 			>
 				<ListItemText inset primary={label} sx={sxListItemText} />

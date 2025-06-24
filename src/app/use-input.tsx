@@ -1,5 +1,6 @@
+import useMutationNewChat from "@/hooks/mutations/use-mutation-new-chat";
+import useMutationStream from "@/hooks/mutations/use-mutation-stream";
 import useStore, { type Store } from "@/hooks/use-store";
-import { useMutation } from "@tanstack/react-query";
 import {
 	type ChangeEvent,
 	type KeyboardEvent,
@@ -34,28 +35,9 @@ export default function useInput(): Tuple {
 		streamedResponse,
 		setStreamedResponse,
 	} = useStore(useShallow(selector));
-	const { mutate, isPending } = useMutation({
-		mutationKey: ["mutateStream"],
-		mutationFn: async (prompt: string) => {
-			const res = await fetch("/api/stream", {
-				method: "POST",
-				body: JSON.stringify({ prompt }),
-			});
-
-			if (!res.body) return "No response body received.";
-
-			const reader = res.body.getReader();
-			const decoder = new TextDecoder("utf-8");
-
-			while (true) {
-				const { value, done } = await reader.read();
-				if (done) break;
-				const chunk = decoder.decode(value);
-
-				setStreamedResponse((prev) => [prev + chunk]);
-			}
-		},
-	});
+	const { mutate: mutateNew } = useMutationNewChat();
+	const { mutate: mutateStream, isPending } =
+		useMutationStream(setStreamedResponse);
 
 	const handleChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -66,17 +48,18 @@ export default function useInput(): Tuple {
 	const handleKeyDown = useCallback(
 		(e: KeyboardEvent<HTMLInputElement | HTMLDivElement>) => {
 			if (e.key === "Enter") {
-				mutate(prompt);
+				mutateStream(prompt);
+				mutateNew(prompt);
 				setPrompt("");
 				setPromptSubmitColor("error");
 			}
 		},
-		[mutate, prompt, setPrompt, setPromptSubmitColor],
+		[mutateStream, mutateNew, prompt, setPrompt, setPromptSubmitColor],
 	);
 
 	useEffect(() => {
-		setPromptMutator(mutate);
-	}, [mutate, setPromptMutator]);
+		setPromptMutator(mutateStream);
+	}, [mutateStream, setPromptMutator]);
 
 	return [isPending, prompt, streamedResponse, handleChange, handleKeyDown];
 }

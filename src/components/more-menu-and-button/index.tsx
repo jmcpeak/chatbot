@@ -1,6 +1,6 @@
 "use client";
 
-import useArchiveOrDeleteChatById from "@/hooks/mutations/use-archive-or-delete-chat-by-id";
+import useMutationArchiveOrDeleteChatById from "@/hooks/mutations/use-mutation-archive-or-delete-chat-by-id";
 import useStore, { type Store } from "@/hooks/use-store";
 import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
 import DriveFileRenameOutlineOutlined from "@mui/icons-material/DriveFileRenameOutlineOutlined";
@@ -39,7 +39,7 @@ export default function MoreMenuAndButton({
 	const { setDialogDeleteChatOpen, setDialogDeleteChatId } = useStore(
 		useShallow(selector),
 	);
-	const { mutate, isPending, isSuccess } = useArchiveOrDeleteChatById();
+	const { mutate, isPending, isSuccess } = useMutationArchiveOrDeleteChatById();
 	const params = useParams();
 	const id = idProp ? idProp : (params?.id as string | "");
 

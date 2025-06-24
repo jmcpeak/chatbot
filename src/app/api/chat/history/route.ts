@@ -1,6 +1,8 @@
-import { items } from "@/app/api/chat/history/consts";
+import { db } from "@/app/api/chat/consts";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-	return NextResponse.json({ items });
+	await db.read();
+
+	return NextResponse.json(db.data);
 }

@@ -1,4 +1,4 @@
-import type { ChatHistoryItem } from "@/app/api/chat/history/consts";
+import type { ChatHistoryItem } from "@/app/api/chat/consts";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useChatHistoryById(id: string) {
