@@ -12,7 +12,11 @@ import type { ReactNode } from "react";
 type PersistorOptions = Omit<PersistQueryClientOptions, "queryClient"> | null;
 
 const maxAge = 1000 * 60 * 60 * 24; // 24 hours
-const clientOptions = {
+const optionsPersist = {
+	buster: "v2",
+	maxAge,
+};
+const optionsClient = {
 	defaultOptions: {
 		queries: {
 			gcTime: maxAge,
@@ -22,13 +26,12 @@ const clientOptions = {
 
 export default function QueryProvider({ children }: { children: ReactNode }) {
 	const [persistOptions, setPersistOptions] = useState<PersistorOptions>(null);
-	const client = useMemo(() => new QueryClient(clientOptions), []);
+	const client = useMemo(() => new QueryClient(optionsClient), []);
 
 	useEffect(() => {
 		// window will be available here
 		setPersistOptions({
-			buster: "v2",
-			maxAge,
+			...optionsPersist,
 			persister: createSyncStoragePersister({
 				storage: window.localStorage,
 			}),
