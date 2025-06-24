@@ -1,32 +1,45 @@
 "use client";
 
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { persistQueryClient } from "@tanstack/react-query-persist-client";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { QueryClient } from "@tanstack/react-query";
+import {
+	type PersistQueryClientOptions,
+	PersistQueryClientProvider,
+} from "@tanstack/react-query-persist-client";
+import { useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
+
+type PersistorOptions = Omit<PersistQueryClientOptions, "queryClient"> | null;
+
+const maxAge = 1000 * 60 * 60 * 24; // 24 hours
+const clientOptions = {
+	defaultOptions: {
+		queries: {
+			gcTime: maxAge,
+		},
+	},
+};
 
 export default function QueryProvider({ children }: { children: ReactNode }) {
-	const [hydrated, setHydrated] = useState(false);
-	const queryClientRef = useRef<QueryClient>(new QueryClient());
+	const [persistOptions, setPersistOptions] = useState<PersistorOptions>(null);
+	const client = useMemo(() => new QueryClient(clientOptions), []);
 
 	useEffect(() => {
-		const [unsubscribe, promise] = persistQueryClient({
-			queryClient: queryClientRef.current,
-			persister: createSyncStoragePersister({ storage: window.localStorage }),
-			maxAge: 1000 * 60 * 60 * 24, // 24 hours
+		// window will be available here
+		setPersistOptions({
 			buster: "v2",
+			maxAge,
+			persister: createSyncStoragePersister({
+				storage: window.localStorage,
+			}),
 		});
-
-		promise.then(() => setHydrated(true));
-
-		return unsubscribe; // unsubscribe on unmount
 	}, []);
 
-	if (!hydrated) return null;
+	if (!persistOptions) return null;
 
 	return (
-		<QueryClientProvider client={queryClientRef.current}>
+		<PersistQueryClientProvider client={client} persistOptions={persistOptions}>
 			{children}
-		</QueryClientProvider>
+		</PersistQueryClientProvider>
 	);
 }
