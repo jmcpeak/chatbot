@@ -8,8 +8,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-export const revalidate = 0; // Disable revalidation for this component
-
 const sxListItemText = { pl: 2 };
 
 export default function ChatHistoryItems({ secondaryActionDisabled = false }) {
