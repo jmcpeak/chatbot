@@ -1,4 +1,5 @@
-import { JSONFilePreset } from "lowdb/node";
+import { Low } from "lowdb";
+import { Memory } from "lowdb";
 
 type Author = {
 	role: "user" | "assistant";
@@ -59,7 +60,5 @@ const defaultData: ChatHistoryItem[] = [
 	createChatItem("The Great Depression"),
 ];
 
-export const db = await JSONFilePreset<ChatHistoryItem[]>(
-	"db.json",
-	defaultData,
-);
+const adapter = new Memory<ChatHistoryItem[]>();
+export const db = new Low(adapter, defaultData);
