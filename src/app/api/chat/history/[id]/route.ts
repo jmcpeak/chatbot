@@ -1,6 +1,8 @@
 import { db } from "@/app/api/chat/consts";
 import { NextResponse } from "next/server";
 
+export const fetchCache = "force-no-store";
+
 type Params = { params: Promise<{ id: string }> };
 
 export async function GET(_request: Request, { params }: Params) {
