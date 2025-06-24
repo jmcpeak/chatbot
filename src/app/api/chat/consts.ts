@@ -1,5 +1,5 @@
-import { Low } from "lowdb";
-import { Memory } from "lowdb";
+import { put } from "@vercel/blob";
+import { type Adapter, Low } from "lowdb";
 
 type Author = {
 	role: "user" | "assistant";
@@ -41,7 +41,7 @@ const randomISOStringWithinLastDays = (days = 10) => {
 
 export const createChatItem = (label = "New Chat"): ChatHistoryItem => ({
 	label,
-	key: Math.floor(Math.random() * 5000),
+	key: Math.floor(Math.random() * 500000),
 	id: crypto.randomUUID(),
 	createdAt: randomISOStringWithinLastDays(1),
 	mapping: [
@@ -60,5 +60,36 @@ const defaultData: ChatHistoryItem[] = [
 	createChatItem("The Great Depression"),
 ];
 
-const adapter = new Memory<ChatHistoryItem[]>();
+function createVercelBlobAdapter<T>(
+	blobKey: string,
+	defaultData: T,
+): Adapter<T> {
+	return {
+		async read(): Promise<T> {
+			try {
+				const res = await fetch(
+					`https://w64xsqhwcqpyluf7.public.blob.vercel-storage.com/${blobKey}`,
+				);
+				const text = await res.text();
+				return JSON.parse(text) as T;
+			} catch {
+				return defaultData;
+			}
+		},
+		async write(data: T): Promise<void> {
+			await put(blobKey, JSON.stringify(data), {
+				access: "public",
+				allowOverwrite: true,
+				contentType: "application/json",
+			});
+		},
+	};
+}
+
+// Usage:
+const adapter = createVercelBlobAdapter<ChatHistoryItem[]>(
+	"db.json",
+	defaultData,
+);
 export const db = new Low(adapter, defaultData);
+await db.read();

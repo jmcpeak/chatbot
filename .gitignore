@@ -50,3 +50,5 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /actions-runner/
+.env*.local
+/db.json
