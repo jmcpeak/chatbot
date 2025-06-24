@@ -17,8 +17,17 @@ const messages = [
 	"Let's get started! What do you need?",
 ];
 
+const getMessageForCurrent5MinBlock = () => {
+	const now = new Date();
+	const minutesSinceMidnight = now.getHours() * 60 + now.getMinutes();
+	const blockIndex = Math.floor(minutesSinceMidnight / 5);
+
+	// Cycle through messages if there are fewer than 288
+	return messages[blockIndex % messages.length];
+};
+
 export async function GET() {
-	const message = messages[Math.floor(Math.random() * messages.length)];
+	const message = getMessageForCurrent5MinBlock();
 
 	return NextResponse.json({ message });
 }
