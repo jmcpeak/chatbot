@@ -13,8 +13,9 @@ const sxListItemText = { pl: 2 };
 export default function ChatHistoryItems({ secondaryActionDisabled = false }) {
 	const { id } = useParams();
 	const { data } = useQueryChatHistory();
+	const items = Array.isArray(data) ? data : [];
 
-	return data?.map(({ key, label, ...props }) => (
+	return items?.map(({ key, label, ...props }) => (
 		<ListItemSecondaryActionOnHover
 			disablePadding
 			disableGutters
