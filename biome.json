@@ -24,6 +24,7 @@
 				"all": true,
 				"noProcessEnv": "off",
 				"noSecrets": "off",
+				"useComponentExportOnlyModules": "off",
 				"useExplicitType": "off",
 				"noRestrictedImports": {
 					"level": "error",
