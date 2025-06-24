@@ -14,7 +14,6 @@ type StoreState = {
 	snackbarMessage: string;
 	snackbarOpen: boolean;
 	streamedResponse: string[];
-	temporaryChat: boolean;
 
 	setDialogDeleteChatId: (id: ((prev: string) => string) | string) => void;
 	setDialogDeleteChatOpen: (
@@ -41,9 +40,6 @@ type StoreState = {
 	setStreamedResponse: (
 		response: ((prev: string[]) => string[]) | string[],
 	) => void;
-	setTemporaryChat: (
-		temporaryChat: ((prev: boolean) => boolean) | boolean,
-	) => void;
 };
 
 type StoreData = Pick<
@@ -60,7 +56,6 @@ type StoreData = Pick<
 	| "snackbarMessage"
 	| "snackbarOpen"
 	| "streamedResponse"
-	| "temporaryChat"
 >;
 export type StoreActions = Pick<
 	StoreState,
@@ -76,7 +71,6 @@ export type StoreActions = Pick<
 	| "setSnackbarMessage"
 	| "setSnackbarOpen"
 	| "setStreamedResponse"
-	| "setTemporaryChat"
 >;
 
 const initialState = {
@@ -92,7 +86,6 @@ const initialState = {
 	snackbarMessage: "",
 	snackbarOpen: false,
 	streamedResponse: [],
-	temporaryChat: false,
 };
 
 export type Store = StoreData & StoreActions;
@@ -165,12 +158,6 @@ const stateCreator = combine<StoreData, StoreActions>(initialState, (set) => ({
 		set((state) => ({
 			streamedResponse:
 				typeof next === "function" ? next(state.streamedResponse) : next,
-		}));
-	},
-	setTemporaryChat: (next) => {
-		set((state) => ({
-			temporaryChat:
-				typeof next === "function" ? next(state.temporaryChat) : next,
 		}));
 	},
 }));

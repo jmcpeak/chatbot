@@ -6,7 +6,9 @@ export async function POST(request: Request) {
 	const data = await request.json();
 	const item = createChatItem(data.label);
 
-	await db.update((items) => items.unshift(item));
+	if (!data.temporaryChat) {
+		await db.update((items) => items.unshift(item));
+	}
 
 	return NextResponse.json({ item });
 }

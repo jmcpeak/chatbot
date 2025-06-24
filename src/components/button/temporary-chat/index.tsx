@@ -1,22 +1,22 @@
 "use client";
 
-import useToggleViaParamsEffect from "@/hooks/use-toggle-via-params-effect";
+import { temporaryChatName } from "@/hooks/consts";
+import useToggleViaParams from "@/hooks/use-toggle-via-params";
 import ShieldOutlined from "@mui/icons-material/ShieldOutlined";
 import VerifiedUserOutlined from "@mui/icons-material/VerifiedUserOutlined";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 
 export default function TemporaryChat() {
-	const [temporaryChat, handleClick] =
-		useToggleViaParamsEffect("temporary-chat");
+	const [temporaryChat, handleClick] = useToggleViaParams(temporaryChatName);
 
 	return (
-		<Tooltip title={`Turn ${temporaryChat ? "on" : "off"} temporary chat`}>
+		<Tooltip title={`Turn ${temporaryChat ? "off" : "on"} temporary chat`}>
 			<IconButton aria-label="temporary chat" onClick={handleClick}>
 				{temporaryChat ? (
-					<ShieldOutlined fontSize="small" />
-				) : (
 					<VerifiedUserOutlined fontSize="small" />
+				) : (
+					<ShieldOutlined fontSize="small" />
 				)}
 			</IconButton>
 		</Tooltip>
